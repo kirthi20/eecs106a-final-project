@@ -24,6 +24,11 @@ def controller(turtlebot_frame, goal_frame):
 
   ################################### YOUR CODE HERE ##############
 
+
+  # Use rviz to see what the AR tags look like when propped up and sideways 
+  # Project goal frame on x-y plane so that turtlebot doesnt try to go up
+
+
   #Create a publisher and a tf buffer, which is primed with a tf listener
   pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
   tfBuffer = tf2_ros.Buffer()
@@ -33,8 +38,8 @@ def controller(turtlebot_frame, goal_frame):
   # a 10Hz publishing rate
   r = rospy.Rate(10) # 10hz
 
-  K1 = 0.3
-  K2 = 1
+  K1 = 0.3 # Check sign
+  K2 = -1 # Check sign
   # Loop until the node is killed with Ctrl-C
   while not rospy.is_shutdown():
     try:
@@ -46,7 +51,7 @@ def controller(turtlebot_frame, goal_frame):
 
       # Generate a control command to send to the robot
       cmd = Twist()
-      cmd.linear.x = K1 * transl_error.x
+      cmd.linear.x = K1 * transl_error.x # Make sure it's x we modify?
       
       cmd.angular.z = K2 * rot_error.z
       # If the error is greater than 180, then rotate the other way instead so we don't overrotate
@@ -76,4 +81,4 @@ if __name__ == '__main__':
   try:
     controller(sys.argv[1], sys.argv[2])
   except rospy.ROSInterruptException:
-    pass
+    pass  
