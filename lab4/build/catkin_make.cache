@@ -1,2 +1,0 @@
-ar_track_alvar/ar_track_alvar:ar_track_alvar/ar_track_alvar_msgs:lab4_cam:usb_cam
--DCATKIN_DEVEL_PREFIX=/home/cc/ee106a/fa22/class/ee106a-agf/ros_workspaces/lab4/devel -DCMAKE_INSTALL_PREFIX=/home/cc/ee106a/fa22/class/ee106a-agf/ros_workspaces/lab4/install -G Unix Makefiles

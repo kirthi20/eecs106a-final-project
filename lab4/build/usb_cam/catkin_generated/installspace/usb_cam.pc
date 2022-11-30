@@ -1,8 +1,0 @@
-prefix=/home/cc/ee106a/fa22/class/ee106a-agf/ros_workspaces/lab4/install
-
-Name: usb_cam
-Description: Description of usb_cam
-Version: 0.3.6
-Cflags: -I${prefix}/include
-Libs: -L${prefix}/lib -lusb_cam
-Requires: 
