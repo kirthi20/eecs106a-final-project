@@ -12,14 +12,18 @@ import sys
 
 from geometry_msgs.msg import Twist
 
+# Distance at which the flyering bot stops moving
+stop_threshold = 10
+
+
 #Define the method which contains the main functionality of the node.
 def controller(turtlebot_frame, goal_frame):
   """
   Controls a turtlebot whose position is denoted by turtlebot_frame,
   to go to a position denoted by target_frame
   Inputs:
-  - turtlebot_frame: the tf frame of the AR tag on your turtlebot
-  - target_frame: the tf frame of the target AR tag
+  - turtlebot_frame: the tf frame of your turtlebot
+  - target_frame: the tf frame of the target 
   """
 
   ################################### YOUR CODE HERE ##############
@@ -33,7 +37,7 @@ def controller(turtlebot_frame, goal_frame):
   # a 10Hz publishing rate
   r = rospy.Rate(10) # 10hz
 
-  K1 = 0.3
+  K1 = 0.3 # Check signs?
   K2 = 1
   # Loop until the node is killed with Ctrl-C
   while not rospy.is_shutdown():
@@ -47,10 +51,13 @@ def controller(turtlebot_frame, goal_frame):
       # Generate a control command to send to the robot
       cmd = Twist()
       cmd.linear.x = K1 * transl_error.x
-      
       cmd.angular.z = K2 * rot_error.z
+      
       # If the error is greater than 180, then rotate the other way instead so we don't overrotate
       
+      # If the translational distance to the goal frame is less than a threshold, STOP
+      if transl_error.x < stop_threshold:
+        break
 
       control_command = cmd # Generate this
 
