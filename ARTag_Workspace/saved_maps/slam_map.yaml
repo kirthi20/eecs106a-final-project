@@ -1,0 +1,7 @@
+image: /home/cc/ee106a/fa22/class/ee106a-agf/ros_workspaces/lab4/saved_maps/slam_map.pgm
+resolution: 0.050000
+origin: [-10.000000, -10.000000, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+
