@@ -102,27 +102,6 @@ install/strip/fast: preinstall/fast
 	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
 .PHONY : install/strip/fast
 
-# Special rule for the target test
-test:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
-	/usr/bin/ctest --force-new-ctest-process $(ARGS)
-.PHONY : test
-
-# Special rule for the target test
-test/fast: test
-
-.PHONY : test/fast
-
-# Special rule for the target list_install_components
-list_install_components:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
-.PHONY : list_install_components
-
-# Special rule for the target list_install_components
-list_install_components/fast: list_install_components
-
-.PHONY : list_install_components/fast
-
 # Special rule for the target install/local
 install/local: preinstall
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
@@ -134,6 +113,27 @@ install/local/fast: preinstall/fast
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Installing only the local directory..."
 	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
 .PHONY : install/local/fast
+
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Available install components are: \"Unspecified\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+
+.PHONY : list_install_components/fast
+
+# Special rule for the target test
+test:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running tests..."
+	/usr/bin/ctest --force-new-ctest-process $(ARGS)
+.PHONY : test
+
+# Special rule for the target test
+test/fast: test
+
+.PHONY : test/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -168,6 +168,36 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule
+
+# Convenience name for target.
+lab4_cam_generate_messages: lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule
+
+.PHONY : lab4_cam_generate_messages
+
+# fast build rule for target.
+lab4_cam_generate_messages/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/build
+.PHONY : lab4_cam_generate_messages/fast
+
+# Convenience name for target.
+lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule
+
+# Convenience name for target.
+lab4_cam_generate_messages_eus: lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule
+
+.PHONY : lab4_cam_generate_messages_eus
+
+# fast build rule for target.
+lab4_cam_generate_messages_eus/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/build
+.PHONY : lab4_cam_generate_messages_eus/fast
+
+# Convenience name for target.
 lab4_cam/CMakeFiles/lab4_cam_genpy.dir/rule:
 	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_genpy.dir/rule
 .PHONY : lab4_cam/CMakeFiles/lab4_cam_genpy.dir/rule
@@ -183,19 +213,49 @@ lab4_cam_genpy/fast:
 .PHONY : lab4_cam_genpy/fast
 
 # Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule
+lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule
 
 # Convenience name for target.
-lab4_cam_generate_messages_py: lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule
+lab4_cam_generate_messages_cpp: lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule
 
-.PHONY : lab4_cam_generate_messages_py
+.PHONY : lab4_cam_generate_messages_cpp
 
 # fast build rule for target.
-lab4_cam_generate_messages_py/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/build
-.PHONY : lab4_cam_generate_messages_py/fast
+lab4_cam_generate_messages_cpp/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/build
+.PHONY : lab4_cam_generate_messages_cpp/fast
+
+# Convenience name for target.
+lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule
+
+# Convenience name for target.
+lab4_cam_gencpp: lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule
+
+.PHONY : lab4_cam_gencpp
+
+# fast build rule for target.
+lab4_cam_gencpp/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/build
+.PHONY : lab4_cam_gencpp/fast
+
+# Convenience name for target.
+lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule
+
+# Convenience name for target.
+lab4_cam_geneus: lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule
+
+.PHONY : lab4_cam_geneus
+
+# fast build rule for target.
+lab4_cam_geneus/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_geneus.dir/build.make lab4_cam/CMakeFiles/lab4_cam_geneus.dir/build
+.PHONY : lab4_cam_geneus/fast
 
 # Convenience name for target.
 lab4_cam/CMakeFiles/lab4_cam_generate_messages_nodejs.dir/rule:
@@ -213,49 +273,49 @@ lab4_cam_generate_messages_nodejs/fast:
 .PHONY : lab4_cam_generate_messages_nodejs/fast
 
 # Convenience name for target.
-lab4_cam/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
-.PHONY : lab4_cam/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule
+.PHONY : lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule
 
 # Convenience name for target.
-sensor_msgs_generate_messages_cpp: lab4_cam/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/rule
+_lab4_cam_generate_messages_check_deps_ImageSrv: lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule
 
-.PHONY : sensor_msgs_generate_messages_cpp
+.PHONY : _lab4_cam_generate_messages_check_deps_ImageSrv
 
 # fast build rule for target.
-sensor_msgs_generate_messages_cpp/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build.make lab4_cam/CMakeFiles/sensor_msgs_generate_messages_cpp.dir/build
-.PHONY : sensor_msgs_generate_messages_cpp/fast
+_lab4_cam_generate_messages_check_deps_ImageSrv/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/build.make lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/build
+.PHONY : _lab4_cam_generate_messages_check_deps_ImageSrv/fast
 
 # Convenience name for target.
-lab4_cam/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
-.PHONY : lab4_cam/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
+lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule
 
 # Convenience name for target.
-sensor_msgs_generate_messages_eus: lab4_cam/CMakeFiles/sensor_msgs_generate_messages_eus.dir/rule
+lab4_cam_gennodejs: lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule
 
-.PHONY : sensor_msgs_generate_messages_eus
+.PHONY : lab4_cam_gennodejs
 
 # fast build rule for target.
-sensor_msgs_generate_messages_eus/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build.make lab4_cam/CMakeFiles/sensor_msgs_generate_messages_eus.dir/build
-.PHONY : sensor_msgs_generate_messages_eus/fast
+lab4_cam_gennodejs/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/build.make lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/build
+.PHONY : lab4_cam_gennodejs/fast
 
 # Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule
+lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule
+.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule
 
 # Convenience name for target.
-lab4_cam_gencpp: lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/rule
+lab4_cam_generate_messages_py: lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/rule
 
-.PHONY : lab4_cam_gencpp
+.PHONY : lab4_cam_generate_messages_py
 
 # fast build rule for target.
-lab4_cam_gencpp/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_gencpp.dir/build
-.PHONY : lab4_cam_gencpp/fast
+lab4_cam_generate_messages_py/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/build
+.PHONY : lab4_cam_generate_messages_py/fast
 
 # Convenience name for target.
 lab4_cam/CMakeFiles/lab4_cam_generate_messages_lisp.dir/rule:
@@ -287,141 +347,6 @@ lab4_cam_genlisp/fast:
 	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/build
 .PHONY : lab4_cam_genlisp/fast
 
-# Convenience name for target.
-lab4_cam/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-.PHONY : lab4_cam/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_lisp: lab4_cam/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_lisp
-
-# fast build rule for target.
-sensor_msgs_generate_messages_lisp/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build.make lab4_cam/CMakeFiles/sensor_msgs_generate_messages_lisp.dir/build
-.PHONY : sensor_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
-.PHONY : lab4_cam/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_nodejs: lab4_cam/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_nodejs
-
-# fast build rule for target.
-sensor_msgs_generate_messages_nodejs/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build.make lab4_cam/CMakeFiles/sensor_msgs_generate_messages_nodejs.dir/build
-.PHONY : sensor_msgs_generate_messages_nodejs/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-.PHONY : lab4_cam/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-sensor_msgs_generate_messages_py: lab4_cam/CMakeFiles/sensor_msgs_generate_messages_py.dir/rule
-
-.PHONY : sensor_msgs_generate_messages_py
-
-# fast build rule for target.
-sensor_msgs_generate_messages_py/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/sensor_msgs_generate_messages_py.dir/build.make lab4_cam/CMakeFiles/sensor_msgs_generate_messages_py.dir/build
-.PHONY : sensor_msgs_generate_messages_py/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule
-
-# Convenience name for target.
-lab4_cam_geneus: lab4_cam/CMakeFiles/lab4_cam_geneus.dir/rule
-
-.PHONY : lab4_cam_geneus
-
-# fast build rule for target.
-lab4_cam_geneus/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_geneus.dir/build.make lab4_cam/CMakeFiles/lab4_cam_geneus.dir/build
-.PHONY : lab4_cam_geneus/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule
-
-# Convenience name for target.
-lab4_cam_generate_messages: lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/rule
-
-.PHONY : lab4_cam_generate_messages
-
-# fast build rule for target.
-lab4_cam_generate_messages/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages.dir/build
-.PHONY : lab4_cam_generate_messages/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule
-
-# Convenience name for target.
-lab4_cam_generate_messages_eus: lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/rule
-
-.PHONY : lab4_cam_generate_messages_eus
-
-# fast build rule for target.
-lab4_cam_generate_messages_eus/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages_eus.dir/build
-.PHONY : lab4_cam_generate_messages_eus/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule
-
-# Convenience name for target.
-lab4_cam_gennodejs: lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/rule
-
-.PHONY : lab4_cam_gennodejs
-
-# fast build rule for target.
-lab4_cam_gennodejs/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/build.make lab4_cam/CMakeFiles/lab4_cam_gennodejs.dir/build
-.PHONY : lab4_cam_gennodejs/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule
-.PHONY : lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule
-
-# Convenience name for target.
-_lab4_cam_generate_messages_check_deps_ImageSrv: lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/rule
-
-.PHONY : _lab4_cam_generate_messages_check_deps_ImageSrv
-
-# fast build rule for target.
-_lab4_cam_generate_messages_check_deps_ImageSrv/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/build.make lab4_cam/CMakeFiles/_lab4_cam_generate_messages_check_deps_ImageSrv.dir/build
-.PHONY : _lab4_cam_generate_messages_check_deps_ImageSrv/fast
-
-# Convenience name for target.
-lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule
-.PHONY : lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule
-
-# Convenience name for target.
-lab4_cam_generate_messages_cpp: lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/rule
-
-.PHONY : lab4_cam_generate_messages_cpp
-
-# fast build rule for target.
-lab4_cam_generate_messages_cpp/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_generate_messages_cpp.dir/build
-.PHONY : lab4_cam_generate_messages_cpp/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -431,27 +356,22 @@ help:
 	@echo "... install"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... install/strip"
-	@echo "... lab4_cam_genpy"
-	@echo "... lab4_cam_generate_messages_py"
-	@echo "... lab4_cam_generate_messages_nodejs"
-	@echo "... sensor_msgs_generate_messages_cpp"
-	@echo "... sensor_msgs_generate_messages_eus"
-	@echo "... lab4_cam_gencpp"
-	@echo "... test"
-	@echo "... lab4_cam_generate_messages_lisp"
-	@echo "... lab4_cam_genlisp"
-	@echo "... sensor_msgs_generate_messages_lisp"
-	@echo "... sensor_msgs_generate_messages_nodejs"
-	@echo "... sensor_msgs_generate_messages_py"
-	@echo "... list_install_components"
-	@echo "... lab4_cam_geneus"
 	@echo "... lab4_cam_generate_messages"
 	@echo "... lab4_cam_generate_messages_eus"
-	@echo "... lab4_cam_gennodejs"
-	@echo "... _lab4_cam_generate_messages_check_deps_ImageSrv"
+	@echo "... install/strip"
+	@echo "... lab4_cam_genpy"
 	@echo "... install/local"
 	@echo "... lab4_cam_generate_messages_cpp"
+	@echo "... lab4_cam_gencpp"
+	@echo "... list_install_components"
+	@echo "... lab4_cam_geneus"
+	@echo "... lab4_cam_generate_messages_nodejs"
+	@echo "... _lab4_cam_generate_messages_check_deps_ImageSrv"
+	@echo "... lab4_cam_gennodejs"
+	@echo "... lab4_cam_generate_messages_py"
+	@echo "... lab4_cam_generate_messages_lisp"
+	@echo "... lab4_cam_genlisp"
+	@echo "... test"
 .PHONY : help
 
 
