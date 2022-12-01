@@ -2117,32 +2117,6 @@ lab4_cam_genlisp/fast:
 	$(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/build
 .PHONY : lab4_cam_genlisp/fast
 
-#=============================================================================
-# Target rules for targets named usb_cam_node
-
-# Build rule for target.
-usb_cam_node: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 usb_cam_node
-.PHONY : usb_cam_node
-
-# fast build rule for target.
-usb_cam_node/fast:
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam_node.dir/build.make usb_cam/CMakeFiles/usb_cam_node.dir/build
-.PHONY : usb_cam_node/fast
-
-#=============================================================================
-# Target rules for targets named usb_cam
-
-# Build rule for target.
-usb_cam: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 usb_cam
-.PHONY : usb_cam
-
-# fast build rule for target.
-usb_cam/fast:
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam.dir/build.make usb_cam/CMakeFiles/usb_cam.dir/build
-.PHONY : usb_cam/fast
-
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -2306,8 +2280,6 @@ help:
 	@echo "... lab4_cam_generate_messages_py"
 	@echo "... lab4_cam_generate_messages_lisp"
 	@echo "... lab4_cam_genlisp"
-	@echo "... usb_cam_node"
-	@echo "... usb_cam"
 .PHONY : help
 
 

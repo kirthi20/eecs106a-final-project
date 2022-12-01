@@ -197,12 +197,3 @@
 /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/lab4_cam/CMakeFiles/lab4_cam_generate_messages_lisp.dir
 /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/lab4_cam/CMakeFiles/lab4_cam_genlisp.dir
 /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/lab4_cam/CMakeFiles/test.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/install/strip.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/install/local.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/install.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/list_install_components.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/rebuild_cache.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/edit_cache.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/test.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/usb_cam_node.dir
-/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/usb_cam/CMakeFiles/usb_cam.dir

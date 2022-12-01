@@ -25,8 +25,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "lab4_cam/catkin_generated/ordered_paths.cmake"
   "lab4_cam/catkin_generated/package.cmake"
   "lab4_cam/cmake/lab4_cam-genmsg.cmake"
-  "usb_cam/catkin_generated/ordered_paths.cmake"
-  "usb_cam/catkin_generated/package.cmake"
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/devel/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgs-msg-extras.cmake"
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/devel/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgs-msg-paths.cmake"
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/devel/share/ar_track_alvar_msgs/cmake/ar_track_alvar_msgsConfig-version.cmake"
@@ -39,8 +37,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/ar_track_alvar/ar_track_alvar_msgs/package.xml"
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/CMakeLists.txt"
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/package.xml"
-  "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/usb_cam/CMakeLists.txt"
-  "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/usb_cam/package.xml"
   "/opt/ros/noetic/share/actionlib/cmake/actionlib-msg-extras.cmake"
   "/opt/ros/noetic/share/actionlib/cmake/actionlibConfig-version.cmake"
   "/opt/ros/noetic/share/actionlib/cmake/actionlibConfig.cmake"
@@ -53,10 +49,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/opt/ros/noetic/share/bond/cmake/bondConfig.cmake"
   "/opt/ros/noetic/share/bondcpp/cmake/bondcppConfig-version.cmake"
   "/opt/ros/noetic/share/bondcpp/cmake/bondcppConfig.cmake"
-  "/opt/ros/noetic/share/camera_calibration_parsers/cmake/camera_calibration_parsersConfig-version.cmake"
-  "/opt/ros/noetic/share/camera_calibration_parsers/cmake/camera_calibration_parsersConfig.cmake"
-  "/opt/ros/noetic/share/camera_info_manager/cmake/camera_info_managerConfig-version.cmake"
-  "/opt/ros/noetic/share/camera_info_manager/cmake/camera_info_managerConfig.cmake"
   "/opt/ros/noetic/share/catkin/cmake/all.cmake"
   "/opt/ros/noetic/share/catkin/cmake/assert.cmake"
   "/opt/ros/noetic/share/catkin/cmake/atomic_configure_file.cmake"
@@ -286,7 +278,6 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/usr/share/cmake-3.16/Modules/FindGTest.cmake"
   "/usr/share/cmake-3.16/Modules/FindPackageHandleStandardArgs.cmake"
   "/usr/share/cmake-3.16/Modules/FindPackageMessage.cmake"
-  "/usr/share/cmake-3.16/Modules/FindPkgConfig.cmake"
   "/usr/share/cmake-3.16/Modules/FindPythonInterp.cmake"
   "/usr/share/cmake-3.16/Modules/FindThreads.cmake"
   "/usr/share/cmake-3.16/Modules/GNUInstallDirs.cmake"
@@ -344,7 +335,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
   "ar_track_alvar/ar_track_alvar_msgs/CMakeFiles/CMakeDirectoryInformation.cmake"
   "ar_track_alvar/ar_track_alvar/CMakeFiles/CMakeDirectoryInformation.cmake"
   "lab4_cam/CMakeFiles/CMakeDirectoryInformation.cmake"
-  "usb_cam/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
@@ -499,6 +489,4 @@ set(CMAKE_DEPEND_INFO_FILES
   "lab4_cam/CMakeFiles/lab4_cam_generate_messages_py.dir/DependInfo.cmake"
   "lab4_cam/CMakeFiles/lab4_cam_generate_messages_lisp.dir/DependInfo.cmake"
   "lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/DependInfo.cmake"
-  "usb_cam/CMakeFiles/usb_cam_node.dir/DependInfo.cmake"
-  "usb_cam/CMakeFiles/usb_cam.dir/DependInfo.cmake"
   )

@@ -57,7 +57,6 @@ all: gtest/all
 all: ar_track_alvar/ar_track_alvar_msgs/all
 all: ar_track_alvar/ar_track_alvar/all
 all: lab4_cam/all
-all: usb_cam/all
 
 .PHONY : all
 
@@ -66,7 +65,6 @@ preinstall: gtest/preinstall
 preinstall: ar_track_alvar/ar_track_alvar_msgs/preinstall
 preinstall: ar_track_alvar/ar_track_alvar/preinstall
 preinstall: lab4_cam/preinstall
-preinstall: usb_cam/preinstall
 
 .PHONY : preinstall
 
@@ -80,7 +78,6 @@ clean: gtest/clean
 clean: ar_track_alvar/ar_track_alvar_msgs/clean
 clean: ar_track_alvar/ar_track_alvar/clean
 clean: lab4_cam/clean
-clean: usb_cam/clean
 
 .PHONY : clean
 
@@ -341,26 +338,6 @@ lab4_cam/clean: lab4_cam/CMakeFiles/lab4_cam_generate_messages_lisp.dir/clean
 lab4_cam/clean: lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/clean
 
 .PHONY : lab4_cam/clean
-
-#=============================================================================
-# Directory level rules for directory usb_cam
-
-# Recursive "all" directory target.
-usb_cam/all: usb_cam/CMakeFiles/usb_cam_node.dir/all
-usb_cam/all: usb_cam/CMakeFiles/usb_cam.dir/all
-
-.PHONY : usb_cam/all
-
-# Recursive "preinstall" directory target.
-usb_cam/preinstall:
-
-.PHONY : usb_cam/preinstall
-
-# Recursive "clean" directory target.
-usb_cam/clean: usb_cam/CMakeFiles/usb_cam_node.dir/clean
-usb_cam/clean: usb_cam/CMakeFiles/usb_cam.dir/clean
-
-.PHONY : usb_cam/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/doxygen.dir
@@ -5267,60 +5244,6 @@ lab4_cam_genlisp: lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/rule
 lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/clean:
 	$(MAKE) -f lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/build.make lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/clean
 .PHONY : lab4_cam/CMakeFiles/lab4_cam_genlisp.dir/clean
-
-#=============================================================================
-# Target rules for target usb_cam/CMakeFiles/usb_cam_node.dir
-
-# All Build rule for target.
-usb_cam/CMakeFiles/usb_cam_node.dir/all: usb_cam/CMakeFiles/usb_cam.dir/all
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam_node.dir/build.make usb_cam/CMakeFiles/usb_cam_node.dir/depend
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam_node.dir/build.make usb_cam/CMakeFiles/usb_cam_node.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/CMakeFiles --progress-num=77,78 "Built target usb_cam_node"
-.PHONY : usb_cam/CMakeFiles/usb_cam_node.dir/all
-
-# Build rule for subdir invocation for target.
-usb_cam/CMakeFiles/usb_cam_node.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/CMakeFiles 4
-	$(MAKE) -f CMakeFiles/Makefile2 usb_cam/CMakeFiles/usb_cam_node.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/CMakeFiles 0
-.PHONY : usb_cam/CMakeFiles/usb_cam_node.dir/rule
-
-# Convenience name for target.
-usb_cam_node: usb_cam/CMakeFiles/usb_cam_node.dir/rule
-
-.PHONY : usb_cam_node
-
-# clean rule for target.
-usb_cam/CMakeFiles/usb_cam_node.dir/clean:
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam_node.dir/build.make usb_cam/CMakeFiles/usb_cam_node.dir/clean
-.PHONY : usb_cam/CMakeFiles/usb_cam_node.dir/clean
-
-#=============================================================================
-# Target rules for target usb_cam/CMakeFiles/usb_cam.dir
-
-# All Build rule for target.
-usb_cam/CMakeFiles/usb_cam.dir/all:
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam.dir/build.make usb_cam/CMakeFiles/usb_cam.dir/depend
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam.dir/build.make usb_cam/CMakeFiles/usb_cam.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/CMakeFiles --progress-num=75,76 "Built target usb_cam"
-.PHONY : usb_cam/CMakeFiles/usb_cam.dir/all
-
-# Build rule for subdir invocation for target.
-usb_cam/CMakeFiles/usb_cam.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/CMakeFiles 2
-	$(MAKE) -f CMakeFiles/Makefile2 usb_cam/CMakeFiles/usb_cam.dir/all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/CMakeFiles 0
-.PHONY : usb_cam/CMakeFiles/usb_cam.dir/rule
-
-# Convenience name for target.
-usb_cam: usb_cam/CMakeFiles/usb_cam.dir/rule
-
-.PHONY : usb_cam
-
-# clean rule for target.
-usb_cam/CMakeFiles/usb_cam.dir/clean:
-	$(MAKE) -f usb_cam/CMakeFiles/usb_cam.dir/build.make usb_cam/CMakeFiles/usb_cam.dir/clean
-.PHONY : usb_cam/CMakeFiles/usb_cam.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.
