@@ -10,7 +10,10 @@ import rospy
 import tf2_ros
 import sys
 
-from geometry_msgs.msg import Twist
+from geometry_msgs.msg import Twist, Vector3
+
+# Distance threshold for stopping the Turtlebot
+threshold = 0
 
 #Define the method which contains the main functionality of the node.
 def controller(turtlebot_frame, goal_frame):
@@ -24,11 +27,6 @@ def controller(turtlebot_frame, goal_frame):
 
   ################################### YOUR CODE HERE ##############
 
-
-  # Use rviz to see what the AR tags look like when propped up and sideways 
-  # Project goal frame on x-y plane so that turtlebot doesnt try to go up
-
-
   #Create a publisher and a tf buffer, which is primed with a tf listener
   pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
   tfBuffer = tf2_ros.Buffer()
@@ -38,26 +36,33 @@ def controller(turtlebot_frame, goal_frame):
   # a 10Hz publishing rate
   r = rospy.Rate(10) # 10hz
 
-  K1 = 0.3 # Check sign
-  K2 = -1 # Check sign
+  K1 = 0.3
+  K2 = -1
+
+  print('hello')
   # Loop until the node is killed with Ctrl-C
   while not rospy.is_shutdown():
+    print(turtlebot_frame, goal_frame)
     try:
-      trans = tfBuffer.lookup_transform(goal_frame, turtlebot_frame, rospy.Time())
+      # Use tfbuffer to find the transform between turtlebot and target
+      trans = tfBuffer.lookup_transform(turtlebot_frame, goal_frame, rospy.Time())
+      #print(trans)
+
+      # Distance from turtlebot to target
+      distance = trans.transform.translation.x
+      print(distance)
+
+      # If distance is below our threshold, stop running
+      if distance < threshold:
+        break
 
       # Process trans to get your state error
-      transl_error = trans.transform.translation
-      rot_error = trans.transform.rotation
+      velocity = K1 * distance
+      theta = K2 * trans.transform.translation.y
 
       # Generate a control command to send to the robot
-      cmd = Twist()
-      cmd.linear.x = K1 * transl_error.x # Make sure it's x we modify?
-      
-      cmd.angular.z = K2 * rot_error.z
-      # If the error is greater than 180, then rotate the other way instead so we don't overrotate
-      
-
-      control_command = cmd # Generate this
+      #print(velocity, theta)
+      control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta)) # Generate this
 
       #################################### end your code ###############
 
@@ -72,7 +77,7 @@ def controller(turtlebot_frame, goal_frame):
 # when exectued in the shell
 if __name__ == '__main__':
   # Check if the node has received a signal to shut down
-  # If not, run the talker method
+  # If not, run the talker methodt
 
   #Run this program as a new node in the ROS computation graph 
   #called /turtlebot_controller.
@@ -81,4 +86,4 @@ if __name__ == '__main__':
   try:
     controller(sys.argv[1], sys.argv[2])
   except rospy.ROSInterruptException:
-    pass  
+    pass
