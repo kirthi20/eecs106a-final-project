@@ -12,9 +12,6 @@ import sys
 
 from geometry_msgs.msg import Twist, Vector3
 
-# Distance threshold for stopping the Turtlebot
-threshold = 1
-
 #Define the method which contains the main functionality of the node.
 def controller(turtlebot_frame, goal_frame):
   """
@@ -36,7 +33,7 @@ def controller(turtlebot_frame, goal_frame):
   # a 10Hz publishing rate
   r = rospy.Rate(10) # 10hz
 
-  K1 = 0.1
+  K1 = 0.3
   K2 = -1
 
   print('hello')
@@ -44,24 +41,19 @@ def controller(turtlebot_frame, goal_frame):
   while not rospy.is_shutdown():
     print(turtlebot_frame, goal_frame)
     try:
-      # Use tfbuffer to find the transform between turtlebot and target
       trans = tfBuffer.lookup_transform(turtlebot_frame, goal_frame, rospy.Time())
-      #print(trans)
-
-      # Distance from turtlebot to target
-      distance = trans.transform.translation.x
-      print(distance)
-
-      # If distance is below our threshold, stop running
-      if abs(distance) < threshold:
-        break
+      print(trans)
 
       # Process trans to get your state error
-      velocity = K1 * distance
+      velocity = K1 * trans.transform.translation.x
       theta = K2 * trans.transform.translation.y
-
       # Generate a control command to send to the robot
-      #print(velocity, theta)
+
+      print(velocity, theta)
+
+      if abs(trans.transform.translation.x) < .5:
+        print("in range!")
+
       control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta)) # Generate this
 
       #################################### end your code ###############
