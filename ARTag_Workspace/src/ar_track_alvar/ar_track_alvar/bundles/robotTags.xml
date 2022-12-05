@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<multimarker markers="4">
+    <!-- master AR Tag, located above blue batteries -->
+    <marker index="0" status="1">
+        <!-- centered @ 0, 0, 0-->
+        <corner x="-2" y="-2" z="0" />
+        <corner x="2" y="-2" z="0" />
+        <corner x="2" y="2" z="0" />
+        <corner x="-2" y="2" z="0" />
+    </marker>
+
+    <!-- located below camera-->
+    <marker index="1" status="1">
+         <!-- centered @ 0, -5,-16 -->
+        <corner x="-2" y="-7" z="-16" />
+        <corner x="2" y="-7" z="-16" />
+        <corner x="2" y="-3" z="-16" />
+        <corner x="-2" y="-3" z="-16" />
+    </marker>
+
+    <!-- located on the side of the covered up AR tag -->
+    <marker index="2" status="1">
+         <!-- centered @ 12, 0, -8 -->
+        <corner x="12" y="-2" z="-8" />
+        <corner x="12" y="2" z="-8" />
+        <corner x="12" y="-2" z="-6" />
+        <corner x="12" y="2" z="-6" />
+    </marker>
+
+
+    <!-- located on the side of mango label -->
+    <marker index="3" status="1">
+        <!-- centered @ -8, 0,-8 -->
+        <corner x="-8" y="-2" z="-8" />
+        <corner x="-8" y="2" z="-8" />
+        <corner x="-8" y="-2" z="-6" />
+        <corner x="-8" y="2" z="-6" />
+    </marker>
+
+</multimarker>
