@@ -13,7 +13,7 @@ import sys
 from geometry_msgs.msg import Twist, Vector3
 
 # Distance threshold for stopping the Turtlebot
-threshold = 1
+threshold = 0
 
 #Define the method which contains the main functionality of the node.
 def controller(turtlebot_frame, goal_frame):
