@@ -6,6 +6,7 @@
 ################################################################################
 
 from occupancy_grid_2d import OccupancyGrid2d
+from motionPlanAndSendGoal import MotionPlanningAndSending
 
 import rospy
 import sys

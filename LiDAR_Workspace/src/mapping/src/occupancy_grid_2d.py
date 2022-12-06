@@ -12,7 +12,7 @@ import math as Math
 from sensor_msgs.msg import LaserScan
 from visualization_msgs.msg import Marker
 from geometry_msgs.msg import Point
-from std_msgs.msg import ColorRGBA
+from std_msgs.msg import ColorRGBA, MultiArrayLayout, Float32MultiArray, MultiArrayDimension
 
 import numpy as np
 
@@ -105,6 +105,8 @@ class OccupancyGrid2d(object):
         # -- self._vis_topic
         self._vis_topic = rospy.get_param("~topics/vis")
 
+        self._grid_topic = rospy.get_param("~topics/grid")
+
         # Frames.
         # TODO! You'll need to set values for class variables called:
         # -- self._sensor_frame
@@ -125,6 +127,10 @@ class OccupancyGrid2d(object):
         # Publisher.
         self._vis_pub = rospy.Publisher(self._vis_topic,
                                         Marker,
+                                        queue_size=10)
+
+        self._grid_pub = rospy.Publisher(self._grid_topic, 
+                                        Float32MultiArray,
                                         queue_size=10)
 
         return True
@@ -306,3 +312,32 @@ class OccupancyGrid2d(object):
                 m.colors.append(self.Colormap(ii, jj))
 
         self._vis_pub.publish(m)
+
+
+    def PublishToPathFinder(self):
+        ma = Float32MultiArray()
+        layout = MultiArrayLayout()
+
+        # Set up the layout according to http://docs.ros.org/en/api/std_msgs/html/msg/MultiArrayLayout.html
+        heightdim = MultiArrayDimension()
+        heightdim.label = "height"
+        heightdim.size = self._y_num
+        heightdim.stride =  self._x_num * self._y_num
+        layout.dim.append(heightdim)
+
+        widthdim = MultiArrayDimension()
+        widthdim.label = "width"
+        widthdim.size = self._x_num
+        widthdim.stride = self._x_num
+        layout.dim.append(widthdim)
+
+        ma.layout = layout
+
+        # Fill in the data for the multiarray
+        for i range(self._x_num):
+            for j in range(self._y_num):
+                p = self.LogOddsToProbability(self._map[i, j])
+                ma.data.append(p)
+
+        # Publish to our custom topic
+        self._grid_pub.publish(ma)
