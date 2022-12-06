@@ -13,7 +13,8 @@ import sys
 from geometry_msgs.msg import Twist, Vector3
 
 # Distance threshold for stopping the Turtlebot
-threshold = 0
+threshold_distance1 = 0.2
+threshold_distance2 = 0.025
 
 #Define the method which contains the main functionality of the node.
 def controller(turtlebot_frame, goal_frame):
@@ -36,8 +37,8 @@ def controller(turtlebot_frame, goal_frame):
   # a 10Hz publishing rate
   r = rospy.Rate(10) # 10hz
 
-  K1 = 0.1
-  K2 = -1
+  K1 = 0.2
+  K2 = -1.5
 
   print('hello')
   # Loop until the node is killed with Ctrl-C
@@ -49,16 +50,19 @@ def controller(turtlebot_frame, goal_frame):
       #print(trans)
 
       # Distance from turtlebot to target
-      distance = trans.transform.translation.x
-      print(distance)
+      distance1 = trans.transform.translation.z
+      distance2 = trans.transform.translation.y
+      print(distance1)
+      print(distance2)
+
 
       # If distance is below our threshold, stop running
-      if abs(distance) < threshold:
+      if abs(distance1) < threshold_distance1 and abs(distance2) < threshold_distance2:
         break
 
       # Process trans to get your state error
-      velocity = K1 * distance
-      theta = K2 * trans.transform.translation.y
+      velocity = K1 * distance1
+      theta = K2 * distance2
 
       # Generate a control command to send to the robot
       #print(velocity, theta)
@@ -72,7 +76,10 @@ def controller(turtlebot_frame, goal_frame):
     # Use our rate object to sleep until it is time to publish again
     r.sleep()
 
-      
+def waitForKeyPress():
+  input("Flyer delivered! Press key to return home")
+  pass
+
 # This is Python's sytax for a main() method, which is run by default
 # when exectued in the shell
 if __name__ == '__main__':
@@ -84,6 +91,15 @@ if __name__ == '__main__':
   rospy.init_node('turtlebot_controller', anonymous=True)
 
   try:
-    controller(sys.argv[1], sys.argv[2])
+    controller("ar_marker_0", "ar_marker_4")
+    #controller(sys.argv[1], sys.argv[2])
   except rospy.ROSInterruptException:
     pass
+
+  waitForKeyPress()
+  
+  try:
+    controller("ar_marker_0", "ar_marker_8")
+  except:
+    pass
+  

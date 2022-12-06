@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <multimarker markers="4">
     <!-- master AR Tag -->
-    <marker index="4" status="2">
+    <marker index="8" status="3">
         <!-- centered @ 0, 0, 0-->
         <corner x="-2" y="-2" z="0" />
         <corner x="2" y="-2" z="0" />
@@ -9,7 +9,7 @@
         <corner x="-2" y="2" z="0" />
     </marker>
 
-    <marker index="5" status="2">
+    <marker index="9" status="3">
          <!-- centered @ 8, 0,0 -->
          <corner x="6" y="-2" z="0" />
         <corner x="10" y="-2" z="0" />
@@ -17,7 +17,7 @@
         <corner x="6" y="2" z="0" />
     </marker>
 
-    <marker index="6" status="2">
+    <marker index="10" status="3">
          <!-- centered @ 0, -8, 0 -->
         <corner x="-2" y="-10" z="0" />
         <corner x="2" y="-10" z="0" />
@@ -26,7 +26,7 @@
     </marker>
 
 
-    <marker index="7" status="2">
+    <marker index="11" status="3">
         <!-- centered @ 8, -8, 0 -->
         <corner x="6" y="-10" z="0" />
         <corner x="10" y="-10" z="0" />
