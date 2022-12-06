@@ -49,7 +49,7 @@ class MotionPlanningAndSending():
 
         ###
 
-        # Set up the map
+        # Set up the map, to be filled in at runtime 
         self.np_map = None
 
         # Set up subscriber to get the occupancy grid array
