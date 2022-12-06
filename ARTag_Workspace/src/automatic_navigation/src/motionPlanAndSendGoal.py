@@ -1,5 +1,5 @@
 """
-For more information, ask Chetan. This code isn't currently interfacing with the main robot!
+For more information, ask Chetan/Aditya. This code isn't currently interfacing with the main robot!
 I'm working on motion planning. This is mostly sending code. Not much planning!
 """
 # Basic imports
