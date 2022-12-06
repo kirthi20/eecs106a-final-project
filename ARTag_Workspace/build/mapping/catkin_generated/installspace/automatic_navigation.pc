@@ -1,0 +1,8 @@
+prefix=/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/install
+
+Name: automatic_navigation
+Description: Description of automatic_navigation
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

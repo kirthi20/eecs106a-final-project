@@ -25,9 +25,9 @@ from actionlib_msgs.msg import *
 # Remember we should have code to do 2D pose estimation also
 
 class MotionPlanningAndSending():
-    def main(self):
+    def __init__(self):
         # STAGE 1: We create the client node and the ActionClient
-        rospy.init_node('/planning_client')
+        
 
         self._fixed_frame = "odom"
         self._sensor_frame = "base_link"
@@ -50,15 +50,17 @@ class MotionPlanningAndSending():
         ###
 
         # Set up the map
-        self.np_map = np.zeros((height, width))
+        self.np_map = None
 
         # Set up subscriber to get the occupancy grid array
         self._grid_topic = "/grid/map" # Parameter server in demo.launch
         self._grid_sub = rospy.Subscriber(self._grid_topic, 
                                         Float32MultiArray,
-                                        self.PathfinderCallback
+                                        self.PathfinderCallback,
                                         queue_size=10)
 
+
+        """ 
         # We want to get the transform from the AR Tag of the walking person
 
         # TODO: get the transform from current Turtlebot position to AR tag
@@ -90,6 +92,8 @@ class MotionPlanningAndSending():
         if not reachedTarget:
             self.this_client.cancel_goal()
             # perhaps log it that we failed? (could also log that we succeeded in the else case)
+        """
+
 
     # Function that is called when subscribing to the occupancy grid topic
     # Puts the data into a 2D data structure of choice (numpy array for now)
@@ -103,10 +107,14 @@ class MotionPlanningAndSending():
         height = msg.layout.dim[0].size
         width = msg.layout.dim[1].size
 
+        self.np_map = np.zeros((height, width))
+
         for i in range(height):
             for j in range(width):
                 self.np_map[i][j] = multiarrayAccessor(i, j)
 
+        with np.printoptions(threshold=np.inf):
+            print(self.np_map)
         self.Pathfind()
 
 
@@ -174,3 +182,9 @@ class MotionPlanningAndSending():
 
         # Apply the same transform to the goal AR tag to get position of home relative in odom frame
         # TODO
+
+
+if __name__ == "__main__":
+    rospy.init_node('planning_client')
+    mapper = MotionPlanningAndSending()
+    rospy.spin()

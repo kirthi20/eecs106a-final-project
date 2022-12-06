@@ -334,7 +334,7 @@ class OccupancyGrid2d(object):
         ma.layout = layout
 
         # Fill in the data for the multiarray
-        for i range(self._x_num):
+        for i in range(self._x_num):
             for j in range(self._y_num):
                 p = self.LogOddsToProbability(self._map[i, j])
                 ma.data.append(p)
