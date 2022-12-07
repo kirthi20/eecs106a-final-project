@@ -92,5 +92,6 @@
   <node name="broadcaster_fixed"
         pkg="automatic_navigation"
         type="fixed_tf_broadcaster.py">
+  </node>
   
 </launch>
