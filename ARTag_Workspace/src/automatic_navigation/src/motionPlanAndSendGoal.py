@@ -161,8 +161,11 @@ class MotionPlanningAndSending():
 
         # until queue is empty
         while(len(q) > 0):
+#             p is grid_x, grid_y
+#             transform to pose?
             p = q[0]
             q.pop(0)
+            
 
             # mark as visited
             path_map[p[0]][p[1]] = 1
@@ -181,6 +184,22 @@ class MotionPlanningAndSending():
                 if(a >= 0 and b >= 0 and a < height and b < width and grid_map[a][b] == 0.5):
                     q.append((a,b))
         return False
+        
+    def GridCoordToPose(self, x, y):
+        gridPose = Pose()
+        gridPose.position.x = x
+        gridPose.position.x = y
+        gridPose.position.z = 0
+       
+        angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
+        
+        gridPose.orientation.x = 0
+        gridPose.orientation.y = 0
+        gridPose.orientation.z = 1
+        gridPose.orientation.w = angle
+        
+        return gridPose
+        
         
 
     # Given a height x width numpy array containing a path, visualize on rviz
