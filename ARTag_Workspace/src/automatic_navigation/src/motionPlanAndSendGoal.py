@@ -62,6 +62,11 @@ class MotionPlanningAndSending():
         self._y_min = rospy.get_param("~y/min")
         self._y_max = rospy.get_param("~y/max")
         self._y_res = (self._y_max - self._y_min) / self._y_num # Divide by y_num?
+        self._vis_topic = rospy.get_param("~topics/vis")
+        self._vis_pub = rospy.Publisher(self._vis_topic,
+                                        Marker,
+                                        queue_size=10)
+        self.visualized = False
 
 
         # Set up subscriber to get the occupancy grid array
@@ -121,12 +126,18 @@ class MotionPlanningAndSending():
                 self.np_map[i][j] = multiarrayAccessor(i, j)
 
         # Debugging : print out the map
-        with np.printoptions(threshold=np.inf):
-            print(self.np_map)
+        # with np.printoptions(threshold=np.inf):
+        #     print(self.np_map)
 
         path = self.Pathfind(height, width)
-        if path:
+
+        # Debugging : print out the path
+        with np.printoptions(threshold=np.inf):
+            print(path)
+
+        if np.any(path) and not visualized:
             self.VisualizePath(path)
+
 
 
     # Finds a path from a start (robot) to a goal in the map
@@ -156,8 +167,8 @@ class MotionPlanningAndSending():
 
         # until queue is empty
         while(len(q) > 0):
-#             p is grid_x, grid_y
-#             transform to pose?
+            #p is grid_x, grid_y
+            #transform to pose?
             p = q[0]
             q.pop(0)
             
@@ -176,9 +187,9 @@ class MotionPlanningAndSending():
                 b = p[1] + Dir[i][1]
 
                 # not blocked and valid
-                if(a >= 0 and b >= 0 and a < height and b < width and grid_map[a][b] == 0.5):
+                if(a >= 0 and b >= 0 and a < height and b < width and grid_map[a][b] <= 0.5):
                     q.append((a,b))
-        return False
+        return np.zeros((height, width))
         
     def GridCoordToPose(self, x, y):        
         tempGoal = MoveBaseGoal()
