@@ -3,6 +3,10 @@
   <arg name="fixed_frame" default="odom" />
   <arg name="sensor_frame" default="base_footprint" />
 
+  <!-- Bonus frames of reference. -->
+  <arg name="robot_ar_frame_relative_to_camera" default="ar_marker_0"/>
+  <arg name="goal_ar_frame_relative_to_camera" default="ar_marker_4" />
+
   <!-- Topics. -->
   <arg name="sensor_topic" default="/scan" />
   <arg name="vis_topic" default="/vis/map" />
@@ -52,7 +56,38 @@
 
     <param name="random_downsample" value="$(arg random_downsample)" />
   </node>
-  
+
+    <node name="planner"
+        pkg="automatic_navigation"
+        type="motionPlanAndSendGoal.py"
+        output="screen">
+
+    <param name="/frames/robot_ar_frame" value="$(arg robot_ar_frame_relative_to_camera)" />
+    <param name="/frames/goal_ar_frame" value="$(arg goal_ar_frame_relative_to_camera)" />
+
+
+    <param name="frames/fixed" value="$(arg fixed_frame)" />
+    <param name="frames/sensor" value="$(arg sensor_frame)" />
+
+    <param name="topics/vis" value="$(arg vis_topic)" />
+    <param name="topics/sensor" value="$(arg sensor_topic)" />
+    <param name="topics/grid" value="$(arg grid_topic)" />
+
+    <param name="x/num" value="$(arg x_num)" />
+    <param name="x/min" value="$(arg x_min)" />
+    <param name="x/max" value="$(arg x_max)" />
+    <param name="y/num" value="$(arg y_num)" />
+    <param name="y/min" value="$(arg y_min)" />
+    <param name="y/max" value="$(arg y_max)" />
+
+    <param name="update/occupied" value="$(arg occupied_update)" />
+    <param name="update/occupied_threshold" value="$(arg occupied_threshold)" />
+    <param name="update/free" value="$(arg free_update)" />
+    <param name="update/free_threshold" value="$(arg free_threshold)" />
+
+    <param name="random_downsample" value="$(arg random_downsample)" />
+  </node>
+
   <!-- Node that publishes static transforms so that TF tree links the AR tag, LiDAR scanner, and Turtlebot together -->
   <node name="broadcaster_fixed"
         pkg="automatic_navigation"

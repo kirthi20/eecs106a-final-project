@@ -32,8 +32,8 @@ class MotionPlanningAndSending():
 
         self._fixed_frame = rospy.get_param("~frames/fixed") # This is the where the robot stars
         self._sensor_frame = rospy.get_param("~frames/sensor") # This is the frame of the LiDAR sensor (so it is the current position of the robot)
-        self._robot_ar_frame = "ar_marker_0" # This is the current position of the robot relative to the camera
-        self._goal_ar_frame = "ar_marker_4" # This is the current position of the goal relative to the camera
+        self._robot_ar_frame = rospy.get_param("~frames/robot_ar_frame") # This is the current position of the robot relative to the camera
+        self._goal_ar_frame = rospy.get_param("~frames/goal_ar_frame") # This is the current position of the goal relative to the camera
         #self._home_ar_frame = "ar_marker_8" # This is the position of the start point (same as _fixed_frame if we turn on the robot at the start point)
 
         # Set up tf buffer and listener.
