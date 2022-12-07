@@ -21,8 +21,8 @@ if __name__ == "__main__":
         br.sendTransform((0.0,0.0,0.0),
                          tf.transformations.quaternion_from_euler(0, 0, 1),
                          rospy.Time.now(),
-                         rospy.get_param("~frames/robot_ar_frame"),
-                         rospy.get_param("~frames/base_footprint")) # I don't know if the parameters to this quaternion are correct
+                         "base_footprint",
+                         rospy.get_param("~frames/robot_ar_frame")) # I don't know if the parameters to this quaternion are correct
 
         # Transform between robot's base and LiDAR
         rospy.loginfo("TRANSFORM BROADCASTER WE HAVE SENT THE FIRST TRANSFORM")
