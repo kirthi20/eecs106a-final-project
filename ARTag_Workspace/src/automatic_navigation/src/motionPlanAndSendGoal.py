@@ -180,23 +180,25 @@ class MotionPlanningAndSending():
                     q.append((a,b))
         return False
         
-    def GridCoordToPose(self, x, y):        
+    def GridCoordSendGoal(self, x, y):        
         tempGoal = MoveBaseGoal()
         # This is the PoseStamped
         tempGoal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
         tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
-        tempGoal.target_pose.position.x = x
-        tempGoal.target_pose.position.y = y
-        tempGoal.target_pose.position.z = 0
+#         move by delta x, y
+        tempGoal.target_pose.position.x = _sensor_frame.position.x - x
+        tempGoal.target_pose.position.y = _sensor_frame.position.y - y
         
-        angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
+#         angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
         
-        tempGoal.target_pose.orientation.x = 0
-        tempGoal.target_pose.orientation.y = 0
-        tempGoal.target_pose.orientation.z = 1
-        tempGoal.target_pose.orientation.w = angle
-        
+#         tempGoal.target_pose.orientation.x = 0
+#         tempGoal.target_pose.orientation.y = 0
+#         tempGoal.target_pose.orientation.z = 1
+#         tempGoal.target_pose.orientation.w = angle     
+
+#       changed this to align with example
+        tempGoal.target_pose.orientation.w = 1
         self.this_client.send_goal(tempGoal)
         
     def FrameToGrid(self, frame):
