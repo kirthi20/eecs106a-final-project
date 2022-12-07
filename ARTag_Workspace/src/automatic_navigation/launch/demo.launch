@@ -1,6 +1,7 @@
 <launch>
   <!-- Frames of reference. -->
-  <arg name="fixed_frame" default="odom" />
+  <arg name="robot_start_frame" default="odom" />
+  <arg name="camera_fixed_frame" default="camera_link" />
   <arg name="sensor_frame" default="base_footprint" />
 
   <!-- Bonus frames of reference. -->

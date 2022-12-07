@@ -30,10 +30,15 @@ class MotionPlanningAndSending():
         # STAGE 1: We create the client node and the ActionClient
         
 
-        self._fixed_frame = rospy.get_param("~frames/fixed") # This is the where the robot stars
+        self._fixed_frame = rospy.get_param("~frames/robot_start_frame") # This is where the robot starts (odom frame)
+        # _fixed_frame is odom, and it's connected to the bigger TF tree by the static transforms broadcaster node
+        # _fixed_frame is a misleading variable name: while it's fixed in place, it represents the start point of the robot (origin of the occupancy grid)
+        # It does NOT represent the Realsense camera
         self._sensor_frame = rospy.get_param("~frames/sensor") # This is the frame of the LiDAR sensor (so it is the current position of the robot)
-        self._robot_ar_frame = rospy.get_param("~frames/robot_ar_frame") # This is the current position of the robot relative to the camera
-        self._goal_ar_frame = rospy.get_param("~frames/goal_ar_frame") # This is the current position of the goal relative to the camera
+        # The LiDAR sensor frame is fixed to the Turtlebot frame (by static transforms broadcast), so it's the same thing
+        self._actual_fixed_frame = rospy.get_param("~frames/camera_fixed_frame") # This frame represents the Realsense camera; it doesn't move 
+        self._robot_ar_frame = rospy.get_param("~frames/robot_ar_frame") # This is ar_marker_0, it's the AR tag (and thus the position of the robot; in static transforms broadcaster we fix the AR tag on the robot)
+        self._goal_ar_frame = rospy.get_param("~frames/goal_ar_frame") # This is the current position of the goal AR tag
         #self._home_ar_frame = "ar_marker_8" # This is the position of the start point (same as _fixed_frame if we turn on the robot at the start point)
 
         # Set up tf buffer and listener.
