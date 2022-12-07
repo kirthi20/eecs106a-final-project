@@ -24,13 +24,20 @@
 
   <!-- Random fraction of scan rays to process (a hack for speed). -->
   <arg name="random_downsample" default="0.1" />
+  
+  <!-- Transform node. -->
+  <node name="broadcaster_fixed"
+        pkg="automatic_navigation"
+        type="fixed_tf_broadcaster.py">
 
   <!-- Mapper node. -->
   <node name="mapper"
         pkg="automatic_navigation"
         type="mapping_node.py"
         output="screen">
-
+    
+  
+    
     <param name="frames/fixed" value="$(arg fixed_frame)" />
     <param name="frames/sensor" value="$(arg sensor_frame)" />
 
