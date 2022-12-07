@@ -1,0 +1,18 @@
+<!-- This is a master launch file that launches all the requisite launch files in as necessary -->
+<!-- Ask Chetan if you have more questions -->
+
+<launch>
+    <!-- launches realsense camera node -->
+    <include file="$(find automatic_navigation)/path/our_realsense_camera_launch.launch"/>
+
+    <!-- launches AR tracking node -->
+    <include file="$(find automatic_navigation)/path/ar_track.launch.launch"/>
+
+    <!-- launches occupancy grid related items and static tf transforms needed for tf tree -->
+    <include file="$(find automatic_navigation)/path/primary.launch"/>
+
+    <!-- launches motion planning node and places relevant items into parameter server -->
+    <include file="$(find automatic_navigation)/path/motionPlanning.launch"/>
+
+
+

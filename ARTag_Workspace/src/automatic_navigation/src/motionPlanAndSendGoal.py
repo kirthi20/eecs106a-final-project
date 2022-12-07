@@ -30,11 +30,11 @@ class MotionPlanningAndSending():
         # STAGE 1: We create the client node and the ActionClient
         
 
-        self._fixed_frame = rospy.get_param("~frames/fixed")
-        self._sensor_frame = rospy.get_param("~frames/sensor")
-        self._robot_ar_frame = "ar_marker_0"
-        self._goal_ar_frame = "ar_marker_4"
-        self._home_ar_frame = "ar_marker_8"
+        self._fixed_frame = rospy.get_param("~frames/fixed") # This is the where the robot stars
+        self._sensor_frame = rospy.get_param("~frames/sensor") # This is the frame of the LiDAR sensor (so it is the current position of the robot)
+        self._robot_ar_frame = "ar_marker_0" # This is the current position of the robot relative to the camera
+        self._goal_ar_frame = "ar_marker_4" # This is the current position of the goal relative to the camera
+        #self._home_ar_frame = "ar_marker_8" # This is the position of the start point (same as _fixed_frame if we turn on the robot at the start point)
 
         # Set up tf buffer and listener.
         self._tf_buffer = tf2_ros.Buffer()
@@ -233,9 +233,7 @@ class MotionPlanningAndSending():
 
     # Colormap to take log odds at a voxel to a RGBA color.
     def Colormap(self, ii, jj):
-
         p = self.LogOddsToProbability(self._map[ii, jj])
-
         c = ColorRGBA()
 
         ## CUSTOM CODE : coloring square where robot is
@@ -245,8 +243,7 @@ class MotionPlanningAndSending():
             c.b = 0
             c.a = 0.75
             return c
-        ##      
-
+        ##
         c.r = p
         c.g = 0.1
         c.b = 1.0 - p
