@@ -33,7 +33,7 @@ if __name__ == "__main__":
                          "base_footprint") # These are not stored on the parameter server
 
         # Static transform between odom and camera_link
-        br.sendTransform((0.0,0.0,0.0),
+        br.sendTransform((0.0,1.0,0.0),
                          tf.transformations.quaternion_from_euler(0, 0, 1),
                          rospy.Time.now(),
                          "odom",
