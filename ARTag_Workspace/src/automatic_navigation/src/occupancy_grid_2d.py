@@ -47,6 +47,7 @@ class OccupancyGrid2d(object):
     def LoadParameters(self):
         # Random downsampling fraction, i.e. only keep this fraction of rays.
         if not rospy.has_param("~random_downsample"):
+            rospy.logerr("%s: Error loading random downsampling parameter, non-existent.", self._name)
             return False
         self._random_downsample = rospy.get_param("~random_downsample")
 
@@ -54,18 +55,23 @@ class OccupancyGrid2d(object):
         # TODO! You'll need to set values for class variables called:
         # -- self._x_num
         self._x_num = rospy.get_param("~x/num")
+        rospy.logerr("%s: Error loading x num parameter, non-existent.", self._name)
         
         # -- self._x_min
         self._x_min = rospy.get_param("~x/min")
+        rospy.logerr("%s: Error loading x min parameter, non-existent.", self._name)
         
         # -- self._x_max
         self._x_max = rospy.get_param("~x/max")
+        rospy.logerr("%s: Error loading x max parameter, non-existent.", self._name)
         
         # -- self._x_res # The resolution in x. Note: This isn't a ROS parameter. What will you do instead?
         self._x_res = (self._x_max - self._x_min) / self._x_num # Divide by x_num?
 
+
         # -- self._y_num
         self._y_num = rospy.get_param("~y/num")
+
 
         # -- self._y_min
         self._y_min = rospy.get_param("~y/min")
@@ -78,22 +84,26 @@ class OccupancyGrid2d(object):
 
         # Update parameters.
         if not rospy.has_param("~update/occupied"):
+            rospy.logerr("%s: Error loading update occupied parameter, non-existent.", self._name)
             return False
         self._occupied_update = self.ProbabilityToLogOdds(
             rospy.get_param("~update/occupied"))
 
         if not rospy.has_param("~update/occupied_threshold"):
+            rospy.logerr("%s: Error loading update occupied threshold parameter, non-existent.", self._name)
             return False
         self._occupied_threshold = self.ProbabilityToLogOdds(
             rospy.get_param("~update/occupied_threshold"))
 
         if not rospy.has_param("~update/free"):
+            rospy.logerr("%s: Error loading update free parameter, non-existent.", self._name)
             return False
         self._free_update = self.ProbabilityToLogOdds(
             rospy.get_param("~update/free"))
         #self._free_update = self.ProbabilityToLogOdds(-0.3) # OUR LINE DEBUGGGING ******
 
         if not rospy.has_param("~update/free_threshold"):
+            rospy.logerr("%s: Error loading free threshold parameter, non-existent.", self._name)
             return False
         self._free_threshold = self.ProbabilityToLogOdds(
             rospy.get_param("~update/free_threshold"))
