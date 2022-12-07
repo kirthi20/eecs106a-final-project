@@ -198,6 +198,15 @@ class MotionPlanningAndSending():
         tempGoal.target_pose.orientation.w = angle
         
         self.this_client.send_goal(tempGoal)
+        
+    def FrameToGrid(self, frame)
+        try:
+            trans = tfBuffer.lookup_transform(self._fixed_frame, frame, rospy.Time())
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+            rate.sleep()
+        continue
+        return PointToVoxel(trans.position.x, trans.position.y)
+
                 
         
         
