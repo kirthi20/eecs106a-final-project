@@ -91,7 +91,7 @@
   <!-- Node that publishes static transforms so that TF tree links the AR tag, LiDAR scanner, and Turtlebot together -->
   <node name="broadcaster_fixed"
         pkg="automatic_navigation"
-        type="fixed_tf_broadcaster.py">
+        type="static_transforms_broadcaster.py">
   </node>
   
 </launch>

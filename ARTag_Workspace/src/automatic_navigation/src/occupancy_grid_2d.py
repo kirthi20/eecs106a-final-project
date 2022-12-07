@@ -55,15 +55,12 @@ class OccupancyGrid2d(object):
         # TODO! You'll need to set values for class variables called:
         # -- self._x_num
         self._x_num = rospy.get_param("~x/num")
-        rospy.logerr("%s: Error loading x num parameter, non-existent.", self._name)
         
         # -- self._x_min
         self._x_min = rospy.get_param("~x/min")
-        rospy.logerr("%s: Error loading x min parameter, non-existent.", self._name)
         
         # -- self._x_max
         self._x_max = rospy.get_param("~x/max")
-        rospy.logerr("%s: Error loading x max parameter, non-existent.", self._name)
         
         # -- self._x_res # The resolution in x. Note: This isn't a ROS parameter. What will you do instead?
         self._x_res = (self._x_max - self._x_min) / self._x_num # Divide by x_num?
