@@ -8,7 +8,7 @@ import tf
 
 if __name__ == "__main__":
     rospy.loginfo("TRANSFORM BROADCASTER WE WILL START THE NODE")
-    rospy.init_node("/static_transforms_broadcaster")
+    rospy.init_node("static_transforms_broadcaster")
     rospy.loginfo("TRANSFORM BROADCASTER WE HAVE STARTED THE NODE, NOW CREATING BROADCASTER OBJECT")
     br = tf.TransformBroadcaster()
     rospy.loginfo("TRANSFORM BROADCASTER WE HAVE CREATED THE BROADCASTER OBJECT")
