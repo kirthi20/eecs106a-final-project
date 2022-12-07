@@ -78,16 +78,11 @@ class MotionPlanningAndSending():
         # TODO: get the transform from current Turtlebot position to AR tag
         # using tfBuffer and tfListener I reckon
 
-        goal = MoveBaseGoal()
-        # This is the PoseStamped
-        goal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
-        goal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
-        goal.target_pose.pose.position.x = 0
-        goal.target_pose.pose.orientation.w = 0
+
         # TODO: get the pose from the AR TAG
 
         # Send the goal to go to the AR tag to the turtlebot
-        self.this_client.send_goal(goal)
+        
 
         # TODO: Decide on how long it will take to feedback
 
@@ -161,8 +156,11 @@ class MotionPlanningAndSending():
 
         # until queue is empty
         while(len(q) > 0):
+#             p is grid_x, grid_y
+#             transform to pose?
             p = q[0]
             q.pop(0)
+            
 
             # mark as visited
             path_map[p[0]][p[1]] = 1
@@ -181,6 +179,28 @@ class MotionPlanningAndSending():
                 if(a >= 0 and b >= 0 and a < height and b < width and grid_map[a][b] == 0.5):
                     q.append((a,b))
         return False
+        
+    def GridCoordToPose(self, x, y):        
+        tempGoal = MoveBaseGoal()
+        # This is the PoseStamped
+        tempGoal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
+        tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
+
+        tempGoal.target_pose.position.x = x
+        tempGoal.target_pose.position.y = y
+        tempGoal.target_pose.position.z = 0
+        
+        angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
+        
+        tempGoal.target_pose.orientation.x = 0
+        tempGoal.target_pose.orientation.y = 0
+        tempGoal.target_pose.orientation.z = 1
+        tempGoal.target_pose.orientation.w = angle
+        
+        self.this_client.send_goal(tempGoal)
+                
+        
+        
         
 
     # Given a height x width numpy array containing a path, visualize on rviz
