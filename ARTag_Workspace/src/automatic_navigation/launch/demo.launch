@@ -92,6 +92,8 @@
   <node name="broadcaster_fixed"
         pkg="automatic_navigation"
         type="static_transforms_broadcaster.py">
+        <param name="/frames/robot_ar_frame" value="$(arg robot_ar_frame_relative_to_camera)" />
+
   </node>
   
 </launch>
