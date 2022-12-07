@@ -78,16 +78,11 @@ class MotionPlanningAndSending():
         # TODO: get the transform from current Turtlebot position to AR tag
         # using tfBuffer and tfListener I reckon
 
-        goal = MoveBaseGoal()
-        # This is the PoseStamped
-        goal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
-        goal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
-        goal.target_pose.pose.position.x = 0
-        goal.target_pose.pose.orientation.w = 0
+
         # TODO: get the pose from the AR TAG
 
         # Send the goal to go to the AR tag to the turtlebot
-        self.this_client.send_goal(goal)
+        
 
         # TODO: Decide on how long it will take to feedback
 
@@ -185,20 +180,26 @@ class MotionPlanningAndSending():
                     q.append((a,b))
         return False
         
-    def GridCoordToPose(self, x, y):
-        gridPose = Pose()
-        gridPose.position.x = x
-        gridPose.position.x = y
-        gridPose.position.z = 0
-       
+    def GridCoordToPose(self, x, y):        
+        tempGoal = MoveBaseGoal()
+        # This is the PoseStamped
+        tempGoal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
+        tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
+
+        tempGoal.position.x = x
+        tempGoal.position.y = y
+        tempGoal.position.z = 0
+        
         angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
         
-        gridPose.orientation.x = 0
-        gridPose.orientation.y = 0
-        gridPose.orientation.z = 1
-        gridPose.orientation.w = angle
+        tempGoal.orientation.x = 0
+        tempGoal.orientation.y = 0
+        tempGoal.orientation.z = 1
+        tempGoal.orientation.w = angle
         
-        return gridPose
+        self.this_client.send_goal(tempGoal)
+                
+        
         
         
 
