@@ -120,7 +120,7 @@ class OccupancyGrid2d(object):
         self._sensor_frame = rospy.get_param("~frames/sensor")
 
         # -- self._fixed_frame
-        self._fixed_frame = rospy.get_param("~frames/fixed")
+        self._fixed_frame = rospy.get_param("~frames/robot_start_frame")
 
         # Grid locations of robot, to be found at runtime
         self._robot_x = None

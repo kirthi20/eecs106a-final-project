@@ -139,8 +139,8 @@ class MotionPlanningAndSending():
             self.GridCoordSendGoal(x, y)
 
         # Debugging : print out the path
-        with np.printoptions(threshold=np.inf):
-            print(path)
+        #with np.printoptions(threshold=np.inf):
+            #print(path)
 
         if np.any(path) and not self.visualized:
             self.VisualizePath(path)
@@ -208,8 +208,14 @@ class MotionPlanningAndSending():
         tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
 #         move by delta x, y
-        tempGoal.target_pose.position.x = x - _sensor_frame.position.x 
-        tempGoal.target_pose.position.y = y - _sensor_frame.position.y 
+    # Take your robot's current position relative to odom
+    # Do a lookup transform between the robot's current position and th e original position
+        tempGoalSquare = self.VoxelCenter(x, y)
+
+        sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
+
+        tempGoal.target_pose.pose.position.x = tempGoalSquare[0] - sensorPosInOdom.x
+        tempGoal.target_pose.pose.position.y = tempGoalSquare[1] - sensorPosInOdom.y
         
 #         angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
         
@@ -219,19 +225,15 @@ class MotionPlanningAndSending():
 #         tempGoal.target_pose.orientation.w = angle     
 
 #       changed this to align with example
-        tempGoal.target_pose.orientation.w = 1
+        tempGoal.target_pose.pose.orientation.w = 1
         self.this_client.send_goal(tempGoal)
         
-    def FrameToGrid(self, frame):
+    def FramePositionInOdom(self, frame):
         try:
-            trans = tfBuffer.lookup_transform(self._robot_start_frame, frame, rospy.Time())
+            trans = self._tf_buffer.lookup_transform(self._robot_start_frame, frame, rospy.Time())
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rate.sleep()
-        return PointToVoxel(trans.position.x, trans.position.y)
-
-    def
-        
-        
+        return trans.transform.translation
         
 
     # Given a list of points corresponding to a path, visualize on rviz

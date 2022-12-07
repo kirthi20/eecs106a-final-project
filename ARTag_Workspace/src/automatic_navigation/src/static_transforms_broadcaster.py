@@ -5,6 +5,8 @@
 import roslib   
 import rospy
 import tf2_ros
+import tf
+import Vector3
 import geometry_msgs.msg 
 
 if __name__ == "__main__":
@@ -19,15 +21,30 @@ if __name__ == "__main__":
     transFound = False
     global startOdomCameraTrans
     startOdomCameraTrans = None
+    tfBuffer = tf2_ros.Buffer()
+    tfListener = tf2_ros.TransformListener(tfBuffer)
     while not transFound:
-        tfBuffer = tf2_ros.Buffer()
-        tfListener = tf2_ros.TransformListener(tfBuffer)
+
+        # try:
+        #     startOdomCameraTrans = tfBuffer.lookup_transform("camera_link", rospy.get_param("~frames/robot_ar_frame"), rospy.Time.now())
+        #     transFound = True
+        # except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as err:
+        #     rospy.logwarn(err)
+        #     rate.sleep()
+
+        #fListener.waitForTransform("camera_link", rospy.get_param("~frames/robot_ar_frame"), rospy.Time(), rospy.Duration(4.0))
+        
+        #transFound = canTransform("camera_link", rospy.get_param("~frames/robot_ar_frame"), rospy.Time.now(), rospy.Duration(4.0), "can't transform :(")
+        
         try:
-            startOdomCameraTrans = tfBuffer.lookup_transform(rospy.get_param("~frames/robot_ar_frame"), "camera_link", rospy.Time())
+            now = rospy.Time.now()
+        #    tfListener.waitForTransform("camera_link", rospy.get_param("~frames/robot_ar_frame"), now, rospy.Duration(4.0))
+            startOdomCameraTrans = tfBuffer.lookup_transform("camera_link", rospy.get_param("~frames/robot_ar_frame"), rospy.Time(0))
             transFound = True
-        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
-            rospy.logwarn("No information from TF2")
+        except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as err:
+            rospy.logwarn(err)
             rate.sleep()
+
 
     while not rospy.is_shutdown():
         rospy.loginfo("TRANSFORM BROADCASTER WE ****WILL**** SEND THE FIRST TRANSFORM")
@@ -38,7 +55,10 @@ if __name__ == "__main__":
         startOdomCameraTransStamped.header.stamp = rospy.Time.now()
         startOdomCameraTransStamped.header.frame_id = "camera_link"
         startOdomCameraTransStamped.child_frame_id = "odom"
-        startOdomCameraTransStamped.transform = startOdomCameraTrans
+        startOdomCameraTransStamped.transform = startOdomCameraTrans.transform
+
+        #startOdomCameraTransStamped.transform.translation = startOdomCameraTrans.translation
+        #startOdomCameraTransStamped.transform.rotation = startOdomCameraTrans.rotation
 
 
         br.sendTransform(startOdomCameraTransStamped)
@@ -56,8 +76,9 @@ if __name__ == "__main__":
         identityTransStamped.header.stamp = rospy.Time.now()
         identityTransStamped.header.frame_id = "base_footprint"
         identityTransStamped.child_frame_id = "base_scan"
-        identityTransStamped.transform.translation = (0.0,0.0,0.0)
-        identityTransStamped.transform.rotation = tf2_ros.transformations.quaternion_from_euler(0, 0, 1)
+        identityTransStamped.transform.translation = Vector3(0.0, 0.0, 0.0)
+        identityTransStamped.transform.rotation = tf.transformations.quaternion_from_euler(0.0, 0.0, 0.0)
+        rospy.logerr(identityTransStamped.transform.rotation)
         br.sendTransform(identityTransStamped) # These are not stored on the parameter server
 
         # Static transform between odom and camera_link

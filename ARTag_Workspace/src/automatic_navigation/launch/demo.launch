@@ -41,7 +41,7 @@
 
     <param name="frames/robot_start_frame" value="$(arg robot_start_frame)" />
     <param name="frames/sensor" value="$(arg sensor_frame)" />
-    <param name="camera_fixed_frame" default="$(camera_fixed_frame)" />
+    <param name="frames/camera_fixed_frame" value="$(arg camera_fixed_frame)" />
 
     <param name="topics/vis" value="$(arg vis_topic)" />
     <param name="topics/sensor" value="$(arg sensor_topic)" />
@@ -73,7 +73,7 @@
 
     <param name="frames/robot_start_frame" value="$(arg robot_start_frame)" />
     <param name="frames/sensor" value="$(arg sensor_frame)" />
-    <param name="camera_fixed_frame" default="$(camera_fixed_frame)" />
+    <param name="frames/camera_fixed_frame" value="$(arg camera_fixed_frame)" />
 
     <param name="topics/vis" value="$(arg vis_topic)" />
     <param name="topics/sensor" value="$(arg sensor_topic)" />
@@ -92,14 +92,6 @@
     <param name="update/free_threshold" value="$(arg free_threshold)" />
 
     <param name="random_downsample" value="$(arg random_downsample)" />
-  </node>
-
-  <!-- Node that publishes static transforms so that TF tree links the AR tag, LiDAR scanner, and Turtlebot together -->
-  <node name="broadcaster_fixed"
-        pkg="automatic_navigation"
-        type="static_transforms_broadcaster.py">
-        <param name="frames/robot_ar_frame" value="$(arg robot_ar_frame_relative_to_camera)" />
-
   </node>
   
 </launch>
