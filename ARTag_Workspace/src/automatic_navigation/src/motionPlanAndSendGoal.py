@@ -62,7 +62,7 @@ class MotionPlanningAndSending():
         self._y_min = rospy.get_param("~y/min")
         self._y_max = rospy.get_param("~y/max")
         self._y_res = (self._y_max - self._y_min) / self._y_num # Divide by y_num?
-        self._vis_topic = rospy.get_param("~topics/vis")
+        self._vis_topic = "/vis/path"
         self._vis_pub = rospy.Publisher(self._vis_topic,
                                         Marker,
                                         queue_size=10)
@@ -135,7 +135,7 @@ class MotionPlanningAndSending():
         with np.printoptions(threshold=np.inf):
             print(path)
 
-        if np.any(path) and not visualized:
+        if np.any(path) and not self.visualized:
             self.VisualizePath(path)
 
 
@@ -146,7 +146,7 @@ class MotionPlanningAndSending():
         start = self.getRobotGridPosition()
 
         # goal = self.getGoalGridPosition()
-        goal = (start[0] + 3, start[1] + 3) # Just a test goal for now
+        goal = (start[0] + 8, start[1] + 6) # Just a test goal for now
 
         # Make a copy of the map
         grid_map = np.copy(self.np_map) # This map is the occupancy grid
@@ -163,32 +163,35 @@ class MotionPlanningAndSending():
         q = []
 
         # insert start
-        q.append(start)
+        q.append([start])
 
         # until queue is empty
         while(len(q) > 0):
-            #p is grid_x, grid_y
+            #p is a list of grid_x, grid_y points (a currently explored path)
             #transform to pose?
             p = q[0]
             q.pop(0)
             
 
-            # mark as visited
-            path_map[p[0]][p[1]] = 1
-            grid_map[p[0]][p[1]] = 1
+            # mark last point in path as visited
+            lp = p[-1]
+            path_map[lp[0]][lp[1]] = 1
+            grid_map[lp[0]][lp[1]] = 1
 
             # destination is reached
-            if(p == goal):
-                return path_map
+            if(lp == goal):
+                return np.array(p)
 
             # check in all four directions
             for i in range(4):
-                a = p[0] + Dir[i][0]
-                b = p[1] + Dir[i][1]
+                a = lp[0] + Dir[i][0]
+                b = lp[1] + Dir[i][1]
 
                 # not blocked and valid
                 if(a >= 0 and b >= 0 and a < height and b < width and grid_map[a][b] <= 0.5):
-                    q.append((a,b))
+                    newp = p[:] 
+                    newp.append((a,b))
+                    q.append(newp)
         return np.zeros((height, width))
         
     def GridCoordSendGoal(self, x, y):        
@@ -224,7 +227,7 @@ class MotionPlanningAndSending():
         
         
 
-    # Given a height x width numpy array containing a path, visualize on rviz
+    # Given a list of points corresponding to a path, visualize on rviz
     def VisualizePath(self, path):
         m = Marker()
         m.header.stamp = rospy.Time.now()
@@ -236,25 +239,36 @@ class MotionPlanningAndSending():
         m.scale.x = self._x_res
         m.scale.y = self._y_res
         m.scale.z = 0.05
+        for point in path:
+            p = Point(0.0, 0.0, 0.0)
+            (p.x, p.y) = self.VoxelCenter(point[0], point[1])
+            m.points.append(p)
+            c = ColorRGBA()
+            c.r = 0
+            c.g = 100
+            c.b = 0
+            c.a = 0.75
+            
+            m.colors.append(c)
 
-        for ii in range(self._x_num):
-            for jj in range(self._y_num):
-                p = Point(0.0, 0.0, 0.0)
-                (p.x, p.y) = self.VoxelCenter(ii, jj)
+        # for ii in range(self._x_num):
+        #     for jj in range(self._y_num):
+        #         p = Point(0.0, 0.0, 0.0)
+        #         (p.x, p.y) = self.VoxelCenter(ii, jj)
 
-                m.points.append(p)
+        #         m.points.append(p)
 
-                c = ColorRGBA()
-                c.r = 0
-                c.g = 0
-                c.b = 0
-                c.a = 0
-                if path[ii][jj] == 1:
-                    c.r = 0
-                    c.g = 100
-                    c.b = 0
-                    c.a = 0.75
-                m.colors.append(c)
+        #         c = ColorRGBA()
+        #         c.r = 0
+        #         c.g = 0
+        #         c.b = 0
+        #         c.a = 0
+        #         if path[ii][jj] == 1:
+        #             c.r = 0
+        #             c.g = 100
+        #             c.b = 0
+        #             c.a = 0.75
+        #         m.colors.append(c)
 
         self._vis_pub.publish(m)
 
