@@ -12,7 +12,7 @@ import rospy
 import sys
 
 if __name__ == "__main__":
-    rospy.init_node("/mapping_node")
+    rospy.init_node("mapping_node")
 
     og = OccupancyGrid2d()
     if not og.Initialize():
