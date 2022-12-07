@@ -62,8 +62,8 @@
         type="motionPlanAndSendGoal.py"
         output="screen">
 
-    <param name="/frames/robot_ar_frame" value="$(arg robot_ar_frame_relative_to_camera)" />
-    <param name="/frames/goal_ar_frame" value="$(arg goal_ar_frame_relative_to_camera)" />
+    <param name="frames/robot_ar_frame" value="$(arg robot_ar_frame_relative_to_camera)" />
+    <param name="frames/goal_ar_frame" value="$(arg goal_ar_frame_relative_to_camera)" />
 
 
     <param name="frames/fixed" value="$(arg fixed_frame)" />
