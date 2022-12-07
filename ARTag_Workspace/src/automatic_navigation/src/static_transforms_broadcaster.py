@@ -21,8 +21,8 @@ if __name__ == "__main__":
         br.sendTransform((0.0,0.0,0.0),
                          tf.transformations.quaternion_from_euler(0, 0, 1),
                          rospy.Time.now(),
-                         rospy.get_param("~frames/robot_ar_frame"),
-                         "base_footprint") # I don't know if the parameters to this quaternion are correct
+                         "base_footprint",
+                         "camera_link") # I don't know if the parameters to this quaternion are correct
 
         # Transform between robot's base and LiDAR
         rospy.loginfo("TRANSFORM BROADCASTER WE HAVE SENT THE FIRST TRANSFORM")
@@ -31,4 +31,11 @@ if __name__ == "__main__":
                          rospy.Time.now(),
                          "base_scan",
                          "base_footprint") # These are not stored on the parameter server
+
+        # Static transform between odom and camera_link
+        br.sendTransform((0.0,0.0,0.0),
+                         tf.transformations.quaternion_from_euler(0, 0, 1),
+                         rospy.Time.now(),
+                         "odom",
+                         "camera_link") # I don't know if the parameters to this quaternion are correct
         rate.sleep()

@@ -1,0 +1,1 @@
+<!-- <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find lab4_cam)/launch/realsense_camera_urdf.urdf.xacro' use_nominal_extrinsics:=false"/> -->
