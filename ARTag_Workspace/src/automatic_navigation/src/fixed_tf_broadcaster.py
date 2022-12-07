@@ -11,6 +11,11 @@ rospy.init_node('fixed_tf_broadcaster')
            br.sendTransform((0.0, 0.0, 0.0),
                             (0.0, 0.0, 0.0, 1.0),
                             rospy.Time.now(),
-                            "self._robot_ar_frame",
-                            "self._sensor_frame")
+                            "ar_marker_0",
+                            rospy.get_param("~frames/sensor"))
+           br.sendTransform((0.0, 0.0, 0.0),
+                            (0.0, 0.0, 0.0, 1.0),
+                            rospy.Time.now(),
+                            rospy.get_param("~frames/base_footprint"),
+                            rospy.get_param("~frames/base_scan"))
            rate.sleep()

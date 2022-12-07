@@ -1,0 +1,16 @@
+digraph G {
+"camera_link" -> "camera_color_frame"[label="Broadcaster: /camera/realsense2_camera_manager\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1670374895.343 sec old)\nBuffer length: 0.000 sec\n"];
+"camera_bottom_screw_frame" -> "camera_link"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1670374895.343 sec old)\nBuffer length: 0.000 sec\n"];
+"camera_color_frame" -> "camera_color_optical_frame"[label="Broadcaster: /camera/realsense2_camera_manager\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1670374895.343 sec old)\nBuffer length: 0.000 sec\n"];
+"base_footprint" -> "base_scan"[label="Broadcaster: /static_transform_publisher_1670369257566025277\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1670374895.343 sec old)\nBuffer length: 0.000 sec\n"];
+"odom" -> "base_footprint"[label="Broadcaster: /turtlebot3_core\nAverage rate: 29.200 Hz\nMost recent transform: 1670374895.295 ( 0.048 sec old)\nBuffer length: 4.932 sec\n"];
+"base_link" -> "camera_bottom_screw_frame"[label="Broadcaster: /robot_state_publisher\nAverage rate: 10000.000 Hz\nMost recent transform: 0.000 ( 1670374895.343 sec old)\nBuffer length: 0.000 sec\n"];
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1670374895.343"[ shape=plaintext ] ;
+ }->"base_link";
+edge [style=invis];
+ subgraph cluster_legend { style=bold; color=black; label ="view_frames Result";
+"Recorded at time: 1670374895.343"[ shape=plaintext ] ;
+ }->"odom";
+}
