@@ -36,8 +36,12 @@
         type="mapping_node.py"
         output="screen">
 
-    <param name="frames/fixed" value="$(arg fixed_frame)" />
+    <param name="frames/robot_ar_frame" value="$(arg robot_ar_frame_relative_to_camera)" />
+    <param name="frames/goal_ar_frame" value="$(arg goal_ar_frame_relative_to_camera)" />
+
+    <param name="frames/robot_start_frame" value="$(arg robot_start_frame)" />
     <param name="frames/sensor" value="$(arg sensor_frame)" />
+    <param name="camera_fixed_frame" default="$(camera_fixed_frame)" />
 
     <param name="topics/vis" value="$(arg vis_topic)" />
     <param name="topics/sensor" value="$(arg sensor_topic)" />
@@ -67,8 +71,9 @@
     <param name="frames/goal_ar_frame" value="$(arg goal_ar_frame_relative_to_camera)" />
 
 
-    <param name="frames/fixed" value="$(arg fixed_frame)" />
+    <param name="frames/robot_start_frame" value="$(arg robot_start_frame)" />
     <param name="frames/sensor" value="$(arg sensor_frame)" />
+    <param name="camera_fixed_frame" default="$(camera_fixed_frame)" />
 
     <param name="topics/vis" value="$(arg vis_topic)" />
     <param name="topics/sensor" value="$(arg sensor_topic)" />
