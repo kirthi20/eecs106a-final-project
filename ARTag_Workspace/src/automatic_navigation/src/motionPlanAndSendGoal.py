@@ -279,14 +279,26 @@ class MotionPlanningAndSending():
         return (grid_x, grid_y)
 
 
+        #         self._goal_ar_frame = "ar_marker_4"
+        # self._home_ar_frame = "ar_marker_8"
+
 
     def getGoalGridPosition(self):
         # Get the transform between base_link (sensor frame) and the robot AR tag
-        pose = self._tf_buffer.lookup_transform(
+        t, r = self._tf_buffer.lookup_transform(
                 self._robot_ar_frame, self._sensor_frame, rospy.Time())
 
         # Apply the same transform to the goal AR tag to get position of goal relative in odom frame
         # TODO
+        # currentTF = np.matrix(transformations.quaternion_matrix(r))
+        # currentTF[0,3] = t[0]
+        # currentTF[1,3] = t[1]
+        # currentTF[2,3] = t[2]
+
+
+
+
+
 
 
     def getHomeGridPosition(self):
@@ -296,6 +308,10 @@ class MotionPlanningAndSending():
 
         # Apply the same transform to the goal AR tag to get position of home relative in odom frame
         # TODO
+        # get transform from robot ar to sensor
+        # transform to numpy array
+        # home frame to np array 
+        # re
 
 
 if __name__ == "__main__":
