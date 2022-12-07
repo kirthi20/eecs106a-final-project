@@ -187,8 +187,8 @@ class MotionPlanningAndSending():
         tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
 #         move by delta x, y
-        tempGoal.target_pose.position.x = _sensor_frame.position.x - x
-        tempGoal.target_pose.position.y = _sensor_frame.position.y - y
+        tempGoal.target_pose.position.x = x - _sensor_frame.position.x 
+        tempGoal.target_pose.position.y = y - _sensor_frame.position.y 
         
 #         angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
         
