@@ -30,14 +30,11 @@ class MotionPlanningAndSending():
         # STAGE 1: We create the client node and the ActionClient
         
 
-        self._fixed_frame = rospy.get_param("~frames/robot_start_frame") # This is where the robot starts (odom frame)
-        # _fixed_frame is odom, and it's connected to the bigger TF tree by the static transforms broadcaster node
-        # _fixed_frame is a misleading variable name: while it's fixed in place, it represents the start point of the robot (origin of the occupancy grid)
-        # It does NOT represent the Realsense camera
-        self._sensor_frame = rospy.get_param("~frames/sensor") # This is the frame of the LiDAR sensor (so it is the current position of the robot)
-        # The LiDAR sensor frame is fixed to the Turtlebot frame (by static transforms broadcast), so it's the same thing
-        self._actual_fixed_frame = rospy.get_param("~frames/camera_fixed_frame") # This frame represents the Realsense camera; it doesn't move 
+        self._robot_start_frame = rospy.get_param("~frames/robot_start_frame") # This is where the robot starts (odom frame)—also the origin of the occupancy grid
+        self._sensor_frame = rospy.get_param("~frames/sensor") # This represents the current position of the robot; use it when trying to get obstacles
+        self._realsense_camera_frame = rospy.get_param("~frames/camera_fixed_frame") # This frame represents the Realsense camera; it doesn't move
         self._robot_ar_frame = rospy.get_param("~frames/robot_ar_frame") # This is ar_marker_0, it's the AR tag (and thus the position of the robot; in static transforms broadcaster we fix the AR tag on the robot)
+        # Robot_AR_frame *SHOULD* be the position of the robot as detected from the camera
         self._goal_ar_frame = rospy.get_param("~frames/goal_ar_frame") # This is the current position of the goal AR tag
         #self._home_ar_frame = "ar_marker_8" # This is the position of the start point (same as _fixed_frame if we turn on the robot at the start point)
 
@@ -52,8 +49,6 @@ class MotionPlanningAndSending():
 
         # Wait for 3 seconds for the Action Client *server* to start up
         self.this_client.wait_for_server(rospy.Duration(3))
-
-        ###
 
         # Set up the map, to be filled in at runtime 
         self.np_map = None
@@ -117,7 +112,7 @@ class MotionPlanningAndSending():
     # Then, calls a pathfinder to find a path from start to goal (DFS/Djikstras for now)
     def PathfinderCallback(self, msg):
         def multiarrayAccessor(i, j):
-            #msg.layout.dim[1] should be the width dimension
+            # msg.layout.dim[1] should be the width dimension
             width_stride = msg.layout.dim[1].stride
             return msg.data[width_stride*i + j]
 
@@ -150,7 +145,6 @@ class MotionPlanningAndSending():
         # Note : self.np_map[0][0] refers to the top left 
         start = self.getRobotGridPosition()
 
-        # goal = self.getGoalGridPosition()
         goal = (start[0] + 8, start[1] + 6) # Just a test goal for now
 
         # Make a copy of the map
@@ -202,7 +196,9 @@ class MotionPlanningAndSending():
     def GridCoordSendGoal(self, x, y):        
         tempGoal = MoveBaseGoal()
         # This is the PoseStamped
-        tempGoal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
+        # The grid coordinates have odom in the origin (since x, y are relative to odom)
+        # So the goal should be relative to odom
+        tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
         tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
 #         move by delta x, y
@@ -222,7 +218,7 @@ class MotionPlanningAndSending():
         
     def FrameToGrid(self, frame):
         try:
-            trans = tfBuffer.lookup_transform(self._fixed_frame, frame, rospy.Time())
+            trans = tfBuffer.lookup_transform(self._robot_start_frame, frame, rospy.Time())
         except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
             rate.sleep()
         return PointToVoxel(trans.position.x, trans.position.y)
@@ -236,7 +232,7 @@ class MotionPlanningAndSending():
     def VisualizePath(self, path):
         m = Marker()
         m.header.stamp = rospy.Time.now()
-        m.header.frame_id = self._fixed_frame
+        m.header.frame_id = self._robot_start_frame
         m.ns = "map"
         m.id = 0
         m.type = Marker.CUBE_LIST
@@ -312,10 +308,10 @@ class MotionPlanningAndSending():
 
 
     def getRobotGridPosition(self):
-        # Get our current pose from TF.
+        # Get's the robot's position on the grid relative to its start point.
         try:
             pose = self._tf_buffer.lookup_transform(
-                self._fixed_frame, self._sensor_frame, rospy.Time())
+                self._robot_start_frame, self._sensor_frame, rospy.Time())
         except (tf2_ros.LookupException,
                 tf2_ros.ConnectivityException,
                 tf2_ros.ExtrapolationException) as e: # DEBUGGING
