@@ -6,7 +6,7 @@ import roslib
 import rospy
 import tf2_ros
 import tf
-import Vector3
+from geometry_msgs.msg import Point
 import geometry_msgs.msg 
 
 if __name__ == "__main__":
@@ -76,9 +76,15 @@ if __name__ == "__main__":
         identityTransStamped.header.stamp = rospy.Time.now()
         identityTransStamped.header.frame_id = "base_footprint"
         identityTransStamped.child_frame_id = "base_scan"
-        identityTransStamped.transform.translation = Vector3(0.0, 0.0, 0.0)
-        identityTransStamped.transform.rotation = tf.transformations.quaternion_from_euler(0.0, 0.0, 0.0)
-        rospy.logerr(identityTransStamped.transform.rotation)
+        #identityTransStamped.transform.translation = Point(0.0, 0.0, 0.0)
+        identityTransStamped.transform.translation.x = float(0.0)
+        identityTransStamped.transform.translation.y = float(0.0)
+        identityTransStamped.transform.translation.z = float(0.0)
+        thisQuaternion = tf.transformations.quaternion_from_euler(0.0, 0.0, 0.0)
+        identityTransStamped.transform.rotation.x = thisQuaternion[0]
+        identityTransStamped.transform.rotation.y = thisQuaternion[1]
+        identityTransStamped.transform.rotation.z = thisQuaternion[2]
+        identityTransStamped.transform.rotation.w = thisQuaternion[3] 
         br.sendTransform(identityTransStamped) # These are not stored on the parameter server
 
         # Static transform between odom and camera_link

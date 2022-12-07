@@ -14,7 +14,7 @@ import math as Math
 
 from sensor_msgs.msg import LaserScan
 from visualization_msgs.msg import Marker
-from geometry_msgs.msg import Point
+import geometry_msgs.msg 
 from std_msgs.msg import ColorRGBA, MultiArrayLayout, Float32MultiArray, MultiArrayDimension
 
 # Actionlib imports
@@ -152,7 +152,20 @@ class MotionPlanningAndSending():
         # Note : self.np_map[0][0] refers to the top left 
         start = self.getRobotGridPosition()
 
-        goal = (start[0] + 8, start[1] + 6) # Just a test goal for now
+
+        # Get goal AR tag onto the grid and set it as the goal
+        rate = rospy.Rate(10.0)
+        trans = None
+        transformFound = False
+        while not transformFound:
+            try:
+                trans = self._tf_buffer.lookup_transform(self._robot_start_frame, self._goal_ar_frame, rospy.Time())
+                transformFound = True
+            except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+                rospy.logwarn("Failure to lookup transformation from goal AR tag to odom frame.")
+                rate.sleep()
+
+        goal = self.PointToVoxel(trans.transform.translation.x, trans.transform.translation.y)
 
         # Make a copy of the map
         grid_map = np.copy(self.np_map) # This map is the occupancy grid
