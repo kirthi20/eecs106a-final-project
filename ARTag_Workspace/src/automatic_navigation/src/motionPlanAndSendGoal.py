@@ -129,7 +129,14 @@ class MotionPlanningAndSending():
         # with np.printoptions(threshold=np.inf):
         #     print(self.np_map)
 
+        # Having received a path from pathfinding, we go thorugh every point
+        # and call GridCoordSendGoal (which performs the appropriate transforms and
+        # sends the goal to the robot)
         path = self.Pathfind(height, width)
+        for point in path:
+            x = point[0]
+            y = point[1]
+            self.GridCoordSendGoal(x, y)
 
         # Debugging : print out the path
         with np.printoptions(threshold=np.inf):
@@ -151,9 +158,8 @@ class MotionPlanningAndSending():
         grid_map = np.copy(self.np_map) # This map is the occupancy grid
         path_map = np.zeros((height, width)) # This map will purely have the path in it (nothing else)
 
-        # TODO : Run a pathfinding algorithm on self.np_map
+        # TODO : Change to A* search with heuristic
         # Currently using https://www.geeksforgeeks.org/check-possible-path-2d-matrix/
-        #
         
         # directions
         Dir = [[0,1], [0,-1], [1,0], [-1,0]]
@@ -223,7 +229,7 @@ class MotionPlanningAndSending():
             rate.sleep()
         return PointToVoxel(trans.position.x, trans.position.y)
 
-                
+    def
         
         
         
