@@ -186,16 +186,16 @@ class MotionPlanningAndSending():
         tempGoal.target_pose.header.frame_id = 'base_link' # This is the rotational center of TurtleBot 3
         tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
-        tempGoal.position.x = x
-        tempGoal.position.y = y
-        tempGoal.position.z = 0
+        tempGoal.target_pose.position.x = x
+        tempGoal.target_pose.position.y = y
+        tempGoal.target_pose.position.z = 0
         
         angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
         
-        tempGoal.orientation.x = 0
-        tempGoal.orientation.y = 0
-        tempGoal.orientation.z = 1
-        tempGoal.orientation.w = angle
+        tempGoal.target_pose.orientation.x = 0
+        tempGoal.target_pose.orientation.y = 0
+        tempGoal.target_pose.orientation.z = 1
+        tempGoal.target_pose.orientation.w = angle
         
         self.this_client.send_goal(tempGoal)
                 
