@@ -7,9 +7,9 @@ import rospy
 import tf
 
 if __name__ == "__main__":
-    rospy.loginfo("TRANSFORM BROADCASTER WE WILL START THE NODE")
+    rospy.loginfo("Transform broadcaster: Node starting")
     rospy.init_node("static_transforms_broadcaster")
-    rospy.loginfo("TRANSFORM BROADCASTER WE HAVE STARTED THE NODE, NOW CREATING BROADCASTER OBJECT")
+    rospy.loginfo("Transform broadcaster: initializing broadcaster object")
     br = tf.TransformBroadcaster()
     rospy.loginfo("TRANSFORM BROADCASTER WE HAVE CREATED THE BROADCASTER OBJECT")
     rate = rospy.Rate(10.0)
@@ -21,14 +21,14 @@ if __name__ == "__main__":
         br.sendTransform((0.0,0.0,0.0),
                          tf.transformations.quaternion_from_euler(0, 0, 1),
                          rospy.Time.now(),
-                         "base_footprint",
-                         rospy.get_param("~frames/robot_ar_frame")) # I don't know if the parameters to this quaternion are correct
+                         rospy.get_param("~frames/robot_ar_frame"),
+                         "base_footprint") # I don't know if the parameters to this quaternion are correct
 
         # Transform between robot's base and LiDAR
         rospy.loginfo("TRANSFORM BROADCASTER WE HAVE SENT THE FIRST TRANSFORM")
         br.sendTransform((0.0,0.0,0.0),
                          tf.transformations.quaternion_from_euler(0, 0, 1),
                          rospy.Time.now(),
-                         "base_footprint",
-                         "base_scan") # These are not stored on the parameter server
+                         "base_scan",
+                         "base_footprint") # These are not stored on the parameter server
         rate.sleep()
