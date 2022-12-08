@@ -57,6 +57,7 @@ class MotionPlanningAndSending():
 
         # Set up the map, to be filled in at runtime 
         self.np_map = None
+        self.last_updated = rospy.Time.now()
 
         # Parameter server values
         self._x_num = rospy.get_param("~x/num")
@@ -121,6 +122,8 @@ class MotionPlanningAndSending():
     # Puts the data into a 2D data structure of choice (numpy array for now)
     # Then, calls a pathfinder to find a path from start to goal (DFS/Djikstras for now)
     def PathfinderCallback(self, msg):
+        if rospy.Time.now() - self.last_updated < 5:
+            return
         def multiarrayAccessor(i, j):
             # msg.layout.dim[1] should be the width dimension
             width_stride = msg.layout.dim[1].stride
@@ -225,6 +228,7 @@ class MotionPlanningAndSending():
                     newp.append((a,b))
                     q.append(newp)
         rospy.logerr("PATHFIND TO SEND")
+        self.last_updated = rospy.Time.now()
         return np.zeros((height, width))
         
     def GridCoordSendGoal(self, x, y):
