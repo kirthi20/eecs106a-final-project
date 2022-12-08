@@ -1,0 +1,8 @@
+prefix=/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/install
+
+Name: burger_move_action
+Description: Description of burger_move_action
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: actionlib actionlib_msgs roscpp rospy std_msgs

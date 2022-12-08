@@ -7,6 +7,8 @@ I'm working on motion planning. This is mostly sending code. Not much planning!
 import rospy
 import numpy as np
 from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal, MoveBaseActionGoal
+import burger_move_action.msg
+
 from std_msgs.msg import Header
 from actionlib_msgs.msg import GoalID
 import rospy
@@ -47,7 +49,7 @@ class MotionPlanningAndSending():
 
         # We need to shut this node down if ROS is shutting down, i.e. perhaps tell the TurtleBot to stop moving
         #rospy.on_shutdown(self.shutdown)
-        self.this_client = actionlib.SimpleActionClient("move_base", MoveBaseAction) # CHANGE BACKIF NEEDED
+        self.this_client = actionlib.SimpleActionClient("burger_move", burger_move_action.msg.Burger_moveAction) # CHANGE BACKIF NEEDED
         # FOR MORE INFORMATION SEE http://docs.ros.org/en/fuerte/api/move_base_msgs/html/msg/MoveBaseAction.html
 
         # Wait for 3 seconds for the Action Client *server* to start up
@@ -221,64 +223,46 @@ class MotionPlanningAndSending():
         return np.zeros((height, width))
         
     def GridCoordSendGoal(self, x, y):
-        nearWaypointGoal = False
-        while not nearWaypointGoal:
-            tempGoalSquare = self.VoxelCenter(x, y)
-            # Distance threshold for stopping the Turtlebot
-            threshold_distance1 = 0.2
-            threshold_distance2 = 0.025
+        rospy.logerr("getting grid cord")
+        tempGoalSquare = self.VoxelCenter(x, y)
+        # Distance threshold for stopping the Turtlebot
+        threshold_distance1 = 0.2
+        threshold_distance2 = 0.025
         #rospy.logwarn("In grid coord send goal") 
-            tempGoal = MoveBaseGoal()
+        waypointGoal = burger_move_action.msg.Burger_moveGoal()
         # This is the PoseStamped
         # The grid coordinates have odom in the origin (since x, y are relative to odom)
         # So the goal should be relative to odom
-            tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
-            tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
+        # tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
+        # tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
         # Move by delta x, y
         # Take your robot's current position relative to odom
         # Do a lookup transform between the robot's current position and th e original position
-            sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
-        #tempGoal.target_pose.pose.position.x = tempGoalSquare[0] - sensorPosInOdom.x
-        #tempGoal.target_pose.pose.position.y = tempGoalSquare[1] - sensorPosInOdom.y
-        #changed this to align with example
-        #tempGoal.target_pose.pose.orientation.w = 1
-
-        #angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
-#         tempGoal.target_pose.orientation.x = 0
-#         tempGoal.target_pose.orientation.y = 0
-#         tempGoal.target_pose.orientation.z = 1
-        #tempGoal.target_pose.orientation.w = angle
-            distance1 = tempGoalSquare[0] - sensorPosInOdom.x
-            distance2 = tempGoalSquare[1] - sensorPosInOdom.y
-
-
-            # If distance is below our threshold, stop running
-            if abs(distance1) < threshold_distance1 and abs(distance2) < threshold_distance2:
-                nearWaypointGoal = True
-                return
-
-            K1 = 0.2
-            K2 = -1.5
-            velocity = K1 * distance1
-            theta = K2 * distance2
-
-      # Generate a control command to send to the robot
-      #print(velocity, theta)
-            control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta)) # Generate this
-
-            self.turtlebot_command_pub.publish(control_command)
+        sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
+        temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y )
+        angle = Math.atan2(temp_y, temp_x)
+        if angle > threshold_distance2:
+            waypointGoal.direction = "right"
+            waypoint.distance = Math.atan2(temp_y, temp_x) * 100
+        else:
+            waypointGoal.direction = "forward"
+            waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
+        
+        rospy.logwarn("SENDING GOAL NOW")
+        
+        self.this_client.send_goal(waypointGoal)
 
         
-        # tempGoalAction.goal = tempGoal
-        # self.this_client.send_goal(tempGoal)
-        # rospy.logwarn("SENDING GOAL NOW")
-        # wait = self.this_client.wait_for_result()
-        # if not wait:
-        #         rospy.logerr("Result unavailable, action server is either unavailable or result hasn't returned")
-        # else:
-        #         rospy.logwarn("GET RESULT HERE")
-        #         self.this_client.get_result()
+        wait = self.this_client.wait_for_result()
+        if not wait:
+                rospy.logerr("Result unavailable, action server is either unavailable or result hasn't returned")
+        else:
+                rospy.logwarn("GET RESULT HERE")
+                self.this_client.get_result()
+
+
+
         
     def FramePositionInOdom(self, frame):
         try:

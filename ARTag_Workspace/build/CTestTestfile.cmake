@@ -7,6 +7,6 @@
 subdirs("gtest")
 subdirs("ar_track_alvar/ar_track_alvar_msgs")
 subdirs("automatic_navigation")
+subdirs("turtlebot3_as")
 subdirs("ar_track_alvar/ar_track_alvar")
 subdirs("lab4_cam")
-subdirs("turtlebot_action_server")
