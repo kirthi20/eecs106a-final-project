@@ -14,6 +14,7 @@ import math as Math
 
 from sensor_msgs.msg import LaserScan
 from visualization_msgs.msg import Marker
+from geometry_msgs.msg import Point
 import geometry_msgs.msg 
 from std_msgs.msg import ColorRGBA, MultiArrayLayout, Float32MultiArray, MultiArrayDimension
 
@@ -44,7 +45,7 @@ class MotionPlanningAndSending():
 
         # We need to shut this node down if ROS is shutting down, i.e. perhaps tell the TurtleBot to stop moving
         #rospy.on_shutdown(self.shutdown)
-        self.this_client = actionlib.SimpleActionClient("move_base", MoveBaseAction)
+        self.this_client = actionlib.SimpleActionClient("move_base", MoveBaseGoal) # CHANGE BACKIF NEEDED
         # FOR MORE INFORMATION SEE http://docs.ros.org/en/fuerte/api/move_base_msgs/html/msg/MoveBaseAction.html
 
         # Wait for 3 seconds for the Action Client *server* to start up
@@ -212,7 +213,8 @@ class MotionPlanningAndSending():
                     q.append(newp)
         return np.zeros((height, width))
         
-    def GridCoordSendGoal(self, x, y):        
+    def GridCoordSendGoal(self, x, y):
+        rospy.logerr("In gric coord send goal")       
         tempGoal = MoveBaseGoal()
         # This is the PoseStamped
         # The grid coordinates have odom in the origin (since x, y are relative to odom)
@@ -239,6 +241,7 @@ class MotionPlanningAndSending():
 
 #       changed this to align with example
         tempGoal.target_pose.pose.orientation.w = 1
+        rospy.logerr("SENDING GOAL NOW")
         self.this_client.send_goal(tempGoal)
         
     def FramePositionInOdom(self, frame):
