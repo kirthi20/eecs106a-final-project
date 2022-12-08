@@ -149,7 +149,7 @@ class MotionPlanningAndSending():
             x_here = point[0]
             y_here = point[1]
 
-
+        rospy.logerr("SENDING GOAL TO GRID COORDINATES")
         self.GridCoordSendGoal(x_here, y_here)
 
         # Debugging : print out the path
@@ -224,6 +224,7 @@ class MotionPlanningAndSending():
                     newp = p[:] 
                     newp.append((a,b))
                     q.append(newp)
+        rospy.logerr("PATHFIND TO SEND")
         return np.zeros((height, width))
         
     def GridCoordSendGoal(self, x, y):
@@ -251,14 +252,17 @@ class MotionPlanningAndSending():
             if angle > 0:
                 waypointGoal.direction = "left"
                 waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
-            else angle < 0:
+                rospy.logwarn("SENDING GOAL NOW LEFT")
+            else:
                 waypointGoal.direction = "right"
                 waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
+                rospy.logwarn("SENDING GOAL NOW RIGHT")
         else:
             waypointGoal.direction = "forward"
             waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
+            rospy.logwarn("SENDING GOAL NOW FORWARD")
         
-        rospy.logwarn("SENDING GOAL NOW")
+        
         
         self.this_client.send_goal(waypointGoal)
 
