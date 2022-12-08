@@ -246,10 +246,14 @@ class MotionPlanningAndSending():
         sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
         temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y)
         angle = Math.atan2(temp_y, temp_x)
-        
-        if angle > 0:
-            waypointGoal.direction = "right"
-            waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
+
+        if abs(angle) < threshold_distance2: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
+            if angle > 0:
+                waypointGoal.direction = "left"
+                waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
+            else angle < 0:
+                waypointGoal.direction = "right"
+                waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
         else:
             waypointGoal.direction = "forward"
             waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
