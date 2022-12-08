@@ -65,11 +65,13 @@ if __name__ == "__main__":
         startOdomCameraTransStamped.header.stamp = rospy.Time.now()
         startOdomCameraTransStamped.header.frame_id = "camera_link"
         startOdomCameraTransStamped.child_frame_id = "odom"
+        euler = tf.transformations.euler_from_quaternion(startOdomCameraTrans.transform.rotation)
         # Rotate odom counter-clockwise 90 degrees
         #startOdomCameraTransStamped.transform.rotation = tf.transformations.quaternion_multiply(startOdomCameraTransStamped.transform.rotation, tf.transformations.quaternion_from_euler(0.0, np.pi / 2, 0.0))
-        startOdomCameraTransStamped.transform.rotatation = tf.transformations.quaternion_from_euler(0.0, -(np.pi/2), 0.0)
-        startOdomCameraTransStamped.transform.translation = startOdomCameraTrans.transform.translation
-
+        #startOdomCameraTransStamped.transform.rotatation = tf.transformations.quaternion_from_euler(0.0, -(np.pi/2), 0.0)
+        #startOdomCameraTransStamped.transform.translation = startOdomCameraTrans.transform.translation
+        
+        startOdomCameraTransStamped.transform = startOdomCameraTrans.transform
         #startOdomCameraTransStamped.transform.translation = startOdomCameraTrans.translation
         
 

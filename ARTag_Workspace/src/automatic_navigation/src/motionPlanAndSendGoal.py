@@ -73,7 +73,7 @@ class MotionPlanningAndSending():
                                         Marker,
                                         queue_size=10)
         self.visualized = False
-
+        self.pathfound = False
 
         # Set up subscriber to get the occupancy grid array
         self._grid_topic = rospy.get_param("~topics/grid") # Parameter server in demo.launch
@@ -125,6 +125,8 @@ class MotionPlanningAndSending():
     # Puts the data into a 2D data structure of choice (numpy array for now)
     # Then, calls a pathfinder to find a path from start to goal (DFS/Djikstras for now)
     def PathfinderCallback(self, msg):
+        if self.pathfound:
+            return
 
         # 5 Second timer
         if rospy.Time.now().secs - self.last_updated.secs < 5:
@@ -160,9 +162,14 @@ class MotionPlanningAndSending():
 
 
         if np.any(path) and not self.visualized:
+            self.pathfound = True
             self.VisualizePath(path)
             #rospy.logerr("SENDING GOAL TO GRID COORDINATES")
-            self.PublishToGoalBroadcaster(path)
+            #self.PublishToGoalBroadcaster(path)
+
+            for point in path:
+                self.GridCoordSendGoal(point[0], point[1])
+
 
 
 
@@ -447,6 +454,37 @@ class MotionPlanningAndSending():
 
         # Publish to our custom topic
         self._path_pub.publish(ma)
+
+
+    ############################################ CONTROLLER
+    def GridCoordSendGoal(self, x, y):
+        nearWaypointGoal = False
+        while not nearWaypointGoal:
+            tempGoalSquare = self.VoxelCenter(x, y)
+            # Distance threshold for stopping the Turtlebot
+            threshold_distance1 = 0.2
+            threshold_distance2 = 0.025
+
+            sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
+
+            distance1 = tempGoalSquare[0] - sensorPosInOdom.x
+            distance2 = tempGoalSquare[1] - sensorPosInOdom.y
+
+            # If distance is below our threshold, stop running
+            if abs(distance1) < threshold_distance1 and abs(distance2) < threshold_distance2:
+                nearWaypointGoal = True
+                return
+
+            K1 = 0.2
+            K2 = -1.5
+            velocity = K1 * distance1
+            theta = K2 * distance2
+
+            # Generate a control command to send to the robot
+            #print(velocity, theta)
+            control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta))
+
+            self.turtlebot_command_pub.publish(control_command)
 
 
 if __name__ == "__main__":

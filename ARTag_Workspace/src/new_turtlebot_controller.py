@@ -38,25 +38,16 @@ def GridCoordSendGoal(self, x, y):
 
             self.turtlebot_command_pub.publish(control_command)
 
-def addToQueue(received_waypoint):
-    self.waypoints.append(received_waypoint)
-    self.turtlebot_command_pub.publish(control_command)
+def getQueue(gotten_queue):
+    self.waypoints = gotten_queue
+    while 
 
-def endControl(yes):
-    # Stop the Turtlebot where it is
-    control_command = Twist(Vector3(0, 0, 0), Vector3(0, 0, 0))
-
-def cleanQueue(yes):
-    # remove everything from the queue, useful if motion planning has found a new path
-    self.waypoints = []
 
 if __name__ == "__main__":
     threshold_distance1 = 0.2
     threshold_distance2 = 0.025
-    self.waypoints = []
+    self.waypoints = None
         
     rospy.init_node('new_turtlebot_controller')
-    rospy.Subscriber("controller_commands", Pose, addToQueue)
-    rospy.Subscriber("controller_commands_clean_queue", int64, 
-    rospy.Subscriber("controller_commands_end", int64, endControl)
+    rospy.Subscriber("controller_commands", Pose, getQueue)
     rospy.spin()
