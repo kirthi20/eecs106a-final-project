@@ -1,0 +1,8 @@
+prefix=/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/install
+
+Name: turtlebot_action_server
+Description: Description of turtlebot_action_server
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: actionlib geometry_msgs nav_msgs rospy std_msgs

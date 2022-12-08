@@ -1,0 +1,14 @@
+#goal definition
+int32 distance
+string direction
+int32 request_id
+---
+#result definition
+int32 current_distance
+string status
+int32 request_id
+---
+#feedback
+int32[] step_distance
+int32 request_id
+

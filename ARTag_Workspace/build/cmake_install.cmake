@@ -135,6 +135,7 @@ if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   include("/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/automatic_navigation/cmake_install.cmake")
   include("/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/ar_track_alvar/ar_track_alvar/cmake_install.cmake")
   include("/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/lab4_cam/cmake_install.cmake")
+  include("/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build/turtlebot_action_server/cmake_install.cmake")
 
 endif()
 
