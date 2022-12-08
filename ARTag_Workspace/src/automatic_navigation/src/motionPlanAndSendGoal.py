@@ -86,6 +86,9 @@ class MotionPlanningAndSending():
         # SIMPLE CONTROL SECTION
 
         self.turtlebot_command_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+
+        self._path_topic = rospy.get_param("~topics/path")
+        self._path_pub = rospy.Publisher(self._path_topic, Float32MultiArray, queue_size=10)
         # END SIMPLE CONTROL SECTION
 
         """ 
@@ -122,8 +125,12 @@ class MotionPlanningAndSending():
     # Puts the data into a 2D data structure of choice (numpy array for now)
     # Then, calls a pathfinder to find a path from start to goal (DFS/Djikstras for now)
     def PathfinderCallback(self, msg):
-        if rospy.Time.now() - self.last_updated < 5:
+
+        # 5 Second timer
+        if rospy.Time.now().secs - self.last_updated.secs < 5:
             return
+
+
         def multiarrayAccessor(i, j):
             # msg.layout.dim[1] should be the width dimension
             width_stride = msg.layout.dim[1].stride
@@ -146,21 +153,16 @@ class MotionPlanningAndSending():
         # and call GridCoordSendGoal (which performs the appropriate transforms and
         # sends the goal to the robot)
         path = self.Pathfind(height, width)
-        for point in path:
-            global x_here
-            global y_here
-            x_here = point[0]
-            y_here = point[1]
+    
 
-        rospy.logerr("SENDING GOAL TO GRID COORDINATES")
-        self.GridCoordSendGoal(x_here, y_here)
+        # UNCOMMENT IF not using goal broadcaster node
+        #self.GridCoordSendGoal(x_here, y_here)
 
-        # Debugging : print out the path
-        #with np.printoptions(threshold=np.inf):
-            #print(path)
 
         if np.any(path) and not self.visualized:
             self.VisualizePath(path)
+            #rospy.logerr("SENDING GOAL TO GRID COORDINATES")
+            self.PublishToGoalBroadcaster(path)
 
 
 
@@ -252,7 +254,7 @@ class MotionPlanningAndSending():
         temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y)
         angle = Math.atan2(temp_y, temp_x)
 
-        if abs(angle) < threshold_distance2: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
+        if abs(angle) >= threshold_distance2: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
             if angle > 0:
                 waypointGoal.direction = "left"
                 waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
@@ -416,6 +418,35 @@ class MotionPlanningAndSending():
         # transform to numpy array
         # home frame to np array 
         # re
+
+
+    # Publishes a list of points to the goal broadcaster in the form of a Float32MultiArray
+    def PublishToGoalBroadcaster(self, path):
+        ma = Float32MultiArray()
+        layout = MultiArrayLayout()
+
+        # Set up the layout according to http://docs.ros.org/en/api/std_msgs/html/msg/MultiArrayLayout.html
+        heightdim = MultiArrayDimension()
+        heightdim.label = "num_points"
+        heightdim.size = len(path)
+        heightdim.stride = 2 * len(path)
+        layout.dim.append(heightdim)
+
+        widthdim = MultiArrayDimension()
+        widthdim.label = "num_coords"
+        widthdim.size = 2
+        widthdim.stride = 2
+        layout.dim.append(widthdim)
+
+        ma.layout = layout
+
+        # Fill in the data for the multiarray
+        for point in path:
+            ma.data.append(point[0])
+            ma.data.append(point[1])
+
+        # Publish to our custom topic
+        self._path_pub.publish(ma)
 
 
 if __name__ == "__main__":

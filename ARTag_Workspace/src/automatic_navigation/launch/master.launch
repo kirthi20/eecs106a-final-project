@@ -5,6 +5,7 @@
 
 <launch>
     <arg name="robot_ar_frame_relative_to_camera" default="ar_marker_0"/>
+    <arg name="path_topic" default="/pathgoals"/>
 
     <!-- Node that publishes static transforms so that TF tree links the AR tag, LiDAR scanner, and Turtlebot together -->
     <node name="broadcaster_fixed"
@@ -19,12 +20,10 @@
     <!-- launches AR tracking node -->
     <include file="$(find lab4_cam)/launch/ar_track.launch" />
 
-
-
     <!-- launches occupancy grid related items and static tf transforms needed for tf tree -->
     <include file="$(find automatic_navigation)/launch/demo.launch" />
 
-
+    
     
 </launch>
 
