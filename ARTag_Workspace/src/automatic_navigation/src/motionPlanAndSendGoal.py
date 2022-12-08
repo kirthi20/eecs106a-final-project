@@ -16,7 +16,7 @@ import math as Math
 
 from sensor_msgs.msg import LaserScan
 from visualization_msgs.msg import Marker
-from geometry_msgs.msg import Point
+from geometry_msgs.msg import Point, Twist, Pose, Vector3
 import geometry_msgs.msg 
 from std_msgs.msg import ColorRGBA, MultiArrayLayout, Float32MultiArray, MultiArrayDimension
 
@@ -79,6 +79,11 @@ class MotionPlanningAndSending():
                                         self.PathfinderCallback,
                                         queue_size=10)
 
+
+        # SIMPLE CONTROL SECTION
+
+        self.turtlebot_command_pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+        # END SIMPLE CONTROL SECTION
 
         """ 
         # We want to get the transform from the AR Tag of the walking person
@@ -245,27 +250,37 @@ class MotionPlanningAndSending():
 
         sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
 
-        tempGoal.target_pose.pose.position.x = tempGoalSquare[0] - sensorPosInOdom.x
-        tempGoal.target_pose.pose.position.y = tempGoalSquare[1] - sensorPosInOdom.y
+        #tempGoal.target_pose.pose.position.x = tempGoalSquare[0] - sensorPosInOdom.x
+        #tempGoal.target_pose.pose.position.y = tempGoalSquare[1] - sensorPosInOdom.y
         #changed this to align with example
-        tempGoal.target_pose.pose.orientation.w = 1
+        #tempGoal.target_pose.pose.orientation.w = 1
 
         #angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
 #         tempGoal.target_pose.orientation.x = 0
 #         tempGoal.target_pose.orientation.y = 0
 #         tempGoal.target_pose.orientation.z = 1
-        #tempGoal.target_pose.orientation.w = angle     
+        #tempGoal.target_pose.orientation.w = angle
+        K1 = 0.2
+        K2 = -1.5
+        velocity = K1 * tempGoalSquare[0] - sensorPosInOdom.x
+        theta = K2 * tempGoalSquare[1] - sensorPosInOdom.y
+
+      # Generate a control command to send to the robot
+      #print(velocity, theta)
+        control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta)) # Generate this
+
+        self.turtlebot_command_pub.publish(control_command)
 
         
-        tempGoalAction.goal = tempGoal
-        self.this_client.send_goal(tempGoal)
-        rospy.logwarn("SENDING GOAL NOW")
-        wait = self.this_client.wait_for_result()
-        if not wait:
-                rospy.logerr("Result unavailable, action server is either unavailable or result hasn't returned")
-        else:
-                rospy.logwarn("GET RESULT HERE")
-                self.this_client.get_result()
+        # tempGoalAction.goal = tempGoal
+        # self.this_client.send_goal(tempGoal)
+        # rospy.logwarn("SENDING GOAL NOW")
+        # wait = self.this_client.wait_for_result()
+        # if not wait:
+        #         rospy.logerr("Result unavailable, action server is either unavailable or result hasn't returned")
+        # else:
+        #         rospy.logwarn("GET RESULT HERE")
+        #         self.this_client.get_result()
         
     def FramePositionInOdom(self, frame):
         try:
