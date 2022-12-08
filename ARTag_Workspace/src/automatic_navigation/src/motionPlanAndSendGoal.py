@@ -144,9 +144,13 @@ class MotionPlanningAndSending():
         # sends the goal to the robot)
         path = self.Pathfind(height, width)
         for point in path:
-            x = point[0]
-            y = point[1]
-            self.GridCoordSendGoal(x, y)
+            global x_here
+            global y_here
+            x_here = point[0]
+            y_here = point[1]
+
+
+        self.GridCoordSendGoal(x_here, y_here)
 
         # Debugging : print out the path
         #with np.printoptions(threshold=np.inf):
@@ -240,11 +244,12 @@ class MotionPlanningAndSending():
         # Take your robot's current position relative to odom
         # Do a lookup transform between the robot's current position and th e original position
         sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
-        temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y )
+        temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y)
         angle = Math.atan2(temp_y, temp_x)
-        if angle > threshold_distance2:
+        
+        if angle > 0:
             waypointGoal.direction = "right"
-            waypoint.distance = Math.atan2(temp_y, temp_x) * 100
+            waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
         else:
             waypointGoal.direction = "forward"
             waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
@@ -252,16 +257,6 @@ class MotionPlanningAndSending():
         rospy.logwarn("SENDING GOAL NOW")
         
         self.this_client.send_goal(waypointGoal)
-
-        
-        wait = self.this_client.wait_for_result()
-        if not wait:
-                rospy.logerr("Result unavailable, action server is either unavailable or result hasn't returned")
-        else:
-                rospy.logwarn("GET RESULT HERE")
-                self.this_client.get_result()
-
-
 
         
     def FramePositionInOdom(self, frame):
