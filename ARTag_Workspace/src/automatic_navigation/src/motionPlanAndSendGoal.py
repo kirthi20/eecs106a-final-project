@@ -221,35 +221,24 @@ class MotionPlanningAndSending():
         return np.zeros((height, width))
         
     def GridCoordSendGoal(self, x, y):
+        nearWaypointGoal = False
+        while not nearWaypointGoal:
+            tempGoalSquare = self.VoxelCenter(x, y)
+            # Distance threshold for stopping the Turtlebot
+            threshold_distance1 = 0.2
+            threshold_distance2 = 0.025
         #rospy.logwarn("In grid coord send goal") 
-
-        tempGoalAction = MoveBaseActionGoal()
-        tempGoal = MoveBaseGoal()
+            tempGoal = MoveBaseGoal()
         # This is the PoseStamped
         # The grid coordinates have odom in the origin (since x, y are relative to odom)
         # So the goal should be relative to odom
-        tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
-        tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
-        
-
-        # Make goalID
-        tempGoalID = GoalID()
-        tempGoalID.stamp = rospy.Time.now()
-        tempGoalID.id = "" + str(x) + " " + str(y)
-        tempGoalAction.goal_id = tempGoalID
-
-        # Make header
-        tempGoalAction.header.stamp = rospy.Time.now()
-        tempGoalAction.header.frame_id = self._robot_start_frame
-
+            tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
+            tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
         # Move by delta x, y
         # Take your robot's current position relative to odom
         # Do a lookup transform between the robot's current position and th e original position
-        tempGoalSquare = self.VoxelCenter(x, y)
-
-        sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
-
+            sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
         #tempGoal.target_pose.pose.position.x = tempGoalSquare[0] - sensorPosInOdom.x
         #tempGoal.target_pose.pose.position.y = tempGoalSquare[1] - sensorPosInOdom.y
         #changed this to align with example
@@ -260,16 +249,25 @@ class MotionPlanningAndSending():
 #         tempGoal.target_pose.orientation.y = 0
 #         tempGoal.target_pose.orientation.z = 1
         #tempGoal.target_pose.orientation.w = angle
-        K1 = 0.2
-        K2 = -1.5
-        velocity = K1 * tempGoalSquare[0] - sensorPosInOdom.x
-        theta = K2 * tempGoalSquare[1] - sensorPosInOdom.y
+            distance1 = tempGoalSquare[0] - sensorPosInOdom.x
+            distance2 = tempGoalSquare[1] - sensorPosInOdom.y
+
+
+            # If distance is below our threshold, stop running
+            if abs(distance1) < threshold_distance1 and abs(distance2) < threshold_distance2:
+                nearWaypointGoal = True
+                return
+
+            K1 = 0.2
+            K2 = -1.5
+            velocity = K1 * distance1
+            theta = K2 * distance2
 
       # Generate a control command to send to the robot
       #print(velocity, theta)
-        control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta)) # Generate this
+            control_command = Twist(Vector3(velocity, 0, 0), Vector3(0, 0, theta)) # Generate this
 
-        self.turtlebot_command_pub.publish(control_command)
+            self.turtlebot_command_pub.publish(control_command)
 
         
         # tempGoalAction.goal = tempGoal
