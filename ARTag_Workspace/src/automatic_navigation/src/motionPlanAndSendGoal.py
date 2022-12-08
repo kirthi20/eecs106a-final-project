@@ -6,7 +6,9 @@ I'm working on motion planning. This is mostly sending code. Not much planning!
 # Basic imports
 import rospy
 import numpy as np
-from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal
+from move_base_msgs.msg import MoveBaseAction, MoveBaseGoal, MoveBaseActionGoal
+from std_msgs.msg import Header
+from actionlib_msgs.msg import GoalID
 import rospy
 import tf2_ros
 import tf
@@ -45,7 +47,7 @@ class MotionPlanningAndSending():
 
         # We need to shut this node down if ROS is shutting down, i.e. perhaps tell the TurtleBot to stop moving
         #rospy.on_shutdown(self.shutdown)
-        self.this_client = actionlib.SimpleActionClient("move_base", MoveBaseGoal) # CHANGE BACKIF NEEDED
+        self.this_client = actionlib.SimpleActionClient("move_base", MoveBaseAction) # CHANGE BACKIF NEEDED
         # FOR MORE INFORMATION SEE http://docs.ros.org/en/fuerte/api/move_base_msgs/html/msg/MoveBaseAction.html
 
         # Wait for 3 seconds for the Action Client *server* to start up
@@ -214,35 +216,56 @@ class MotionPlanningAndSending():
         return np.zeros((height, width))
         
     def GridCoordSendGoal(self, x, y):
-        rospy.logerr("In gric coord send goal")       
+        #rospy.logwarn("In grid coord send goal") 
+
+        tempGoalAction = MoveBaseActionGoal()
         tempGoal = MoveBaseGoal()
         # This is the PoseStamped
         # The grid coordinates have odom in the origin (since x, y are relative to odom)
         # So the goal should be relative to odom
         tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
         tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
+        
 
-#         move by delta x, y
-    # Take your robot's current position relative to odom
-    # Do a lookup transform between the robot's current position and th e original position
+        # Make goalID
+        tempGoalID = GoalID()
+        tempGoalID.stamp = rospy.Time.now()
+        tempGoalID.id = "" + str(x) + " " + str(y)
+        tempGoalAction.goal_id = tempGoalID
+
+        # Make header
+        tempGoalAction.header.stamp = rospy.Time.now()
+        tempGoalAction.header.frame_id = self._robot_start_frame
+
+
+        # Move by delta x, y
+        # Take your robot's current position relative to odom
+        # Do a lookup transform between the robot's current position and th e original position
         tempGoalSquare = self.VoxelCenter(x, y)
 
         sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
 
         tempGoal.target_pose.pose.position.x = tempGoalSquare[0] - sensorPosInOdom.x
         tempGoal.target_pose.pose.position.y = tempGoalSquare[1] - sensorPosInOdom.y
-        
-#         angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
-        
+        #changed this to align with example
+        tempGoal.target_pose.pose.orientation.w = 1
+
+        #angle = np.arctan2(_goal_ar_frame.position.y - y, _goal_ar_frame.position.x - x)[1]
 #         tempGoal.target_pose.orientation.x = 0
 #         tempGoal.target_pose.orientation.y = 0
 #         tempGoal.target_pose.orientation.z = 1
-#         tempGoal.target_pose.orientation.w = angle     
+        #tempGoal.target_pose.orientation.w = angle     
 
-#       changed this to align with example
-        tempGoal.target_pose.pose.orientation.w = 1
-        rospy.logerr("SENDING GOAL NOW")
+        
+        tempGoalAction.goal = tempGoal
         self.this_client.send_goal(tempGoal)
+        rospy.logwarn("SENDING GOAL NOW")
+        wait = self.this_client.wait_for_result()
+        if not wait:
+                rospy.logerr("Result unavailable, action server is either unavailable or result hasn't returned")
+        else:
+                rospy.logwarn("GET RESULT HERE")
+                self.this_client.get_result()
         
     def FramePositionInOdom(self, frame):
         try:
