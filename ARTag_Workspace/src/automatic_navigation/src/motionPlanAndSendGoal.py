@@ -233,44 +233,44 @@ class MotionPlanningAndSending():
         self.last_updated = rospy.Time.now()
         return np.zeros((height, width))
         
-    def GridCoordSendGoal(self, x, y):
-        rospy.logerr("getting grid cord")
-        tempGoalSquare = self.VoxelCenter(x, y)
-        # Distance threshold for stopping the Turtlebot
-        threshold_distance1 = 0.2
-        threshold_distance2 = 0.025
-        #rospy.logwarn("In grid coord send goal") 
-        waypointGoal = burger_move_action.msg.Burger_moveGoal()
-        # This is the PoseStamped
-        # The grid coordinates have odom in the origin (since x, y are relative to odom)
-        # So the goal should be relative to odom
-        # tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
-        # tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
+    # def GridCoordSendGoal(self, x, y):
+    #     rospy.logerr("getting grid cord")
+    #     tempGoalSquare = self.VoxelCenter(x, y)
+    #     # Distance threshold for stopping the Turtlebot
+    #     threshold_distance1 = 0.2
+    #     threshold_distance2 = 0.025
+    #     #rospy.logwarn("In grid coord send goal") 
+    #     waypointGoal = burger_move_action.msg.Burger_moveGoal()
+    #     # This is the PoseStamped
+    #     # The grid coordinates have odom in the origin (since x, y are relative to odom)
+    #     # So the goal should be relative to odom
+    #     # tempGoal.target_pose.header.frame_id = self._robot_start_frame # This is odom (we want the goal to be relative to odom)
+    #     # tempGoal.target_pose.header.stamp = rospy.Time.now() # (Remember when we did this before!) The header part of the PoseStamped has a timestamp
 
-        # Move by delta x, y
-        # Take your robot's current position relative to odom
-        # Do a lookup transform between the robot's current position and th e original position
-        sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
-        temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y)
-        angle = Math.atan2(temp_y, temp_x)
+    #     # Move by delta x, y
+    #     # Take your robot's current position relative to odom
+    #     # Do a lookup transform between the robot's current position and th e original position
+    #     sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
+    #     temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y)
+    #     angle = Math.atan2(temp_y, temp_x)
 
-        if abs(angle) >= threshold_distance2: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
-            if angle > 0:
-                waypointGoal.direction = "left"
-                waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
-                rospy.logwarn("SENDING GOAL NOW LEFT")
-            else:
-                waypointGoal.direction = "right"
-                waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
-                rospy.logwarn("SENDING GOAL NOW RIGHT")
-        else:
-            waypointGoal.direction = "forward"
-            waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
-            rospy.logwarn("SENDING GOAL NOW FORWARD")
+    #     if abs(angle) >= threshold_distance2: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
+    #         if angle > 0:
+    #             waypointGoal.direction = "left"
+    #             waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
+    #             rospy.logwarn("SENDING GOAL NOW LEFT")
+    #         else:
+    #             waypointGoal.direction = "right"
+    #             waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
+    #             rospy.logwarn("SENDING GOAL NOW RIGHT")
+    #     else:
+    #         waypointGoal.direction = "forward"
+    #         waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
+    #         rospy.logwarn("SENDING GOAL NOW FORWARD")
         
         
         
-        self.this_client.send_goal(waypointGoal)
+    #     self.this_client.send_goal(waypointGoal)
 
         
     def FramePositionInOdom(self, frame):

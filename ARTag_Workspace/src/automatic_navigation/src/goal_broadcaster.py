@@ -103,7 +103,7 @@ class GoalBroadcaster():
             tempGoalSquare = self.VoxelCenter(x, y)
             # Distance threshold for stopping the Turtlebot
             threshold_distance1 = 0.2
-            threshold_distance2 = 0.025
+            angle_tolerance = 100 #0.025
             #rospy.logwarn("In grid coord send goal") 
             waypointGoal = burger_move_action.msg.Burger_moveGoal()
             # This is the PoseStamped
@@ -117,9 +117,11 @@ class GoalBroadcaster():
             # Do a lookup transform between the robot's current position and th e original position
             sensorPosInOdom = self.FramePositionInOdom(self._sensor_frame)
             temp_x, temp_y = (tempGoalSquare[0] - sensorPosInOdom.x), (tempGoalSquare[1] - sensorPosInOdom.y)
+            rospy.logerr(temp_x)
+            rospy.logerr(temp_y)
             angle = Math.atan2(temp_y, temp_x)
 
-            if abs(angle) >= threshold_distance2: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
+            if abs(angle) >= angle_tolerance: # NEED TO UPDATE SO THERE'S SOME TOLERANCE HERE, angle will never be exactly zero!
                 if angle > 0:
                     waypointGoal.direction = "left"
                     waypointGoal.distance = int(Math.atan2(temp_y, temp_x) * 100)
@@ -130,8 +132,8 @@ class GoalBroadcaster():
                     rospy.logwarn("SENDING GOAL NOW RIGHT")
             else:
                 waypointGoal.direction = "forward"
-                waypointGoal.distance = int(Math.sqrt(temp_x ** 2 + temp_y ** 2)) 
-                rospy.logwarn("SENDING GOAL NOW FORWARD")
+                waypointGoal.distance = int(Math.sqrt((temp_x *10000) ** 2 + (temp_y * 10000) ** 2))
+                rospy.logwarn("SENDING GOAL NOW FORWARD  " + str(waypointGoal.distance))
             
             
             # Send goal and wait until the goal is completed

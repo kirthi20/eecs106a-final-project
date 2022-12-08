@@ -7,6 +7,7 @@ import rospy
 import tf2_ros
 import tf
 from geometry_msgs.msg import Point
+import numpy as np
 import geometry_msgs.msg 
 
 if __name__ == "__main__":
@@ -45,6 +46,15 @@ if __name__ == "__main__":
             rospy.logwarn(err)
             rate.sleep()
 
+        # try:
+        #     now = rospy.Time.now()
+        # #    tfListener.waitForTransform("camera_link", rospy.get_param("~frames/robot_ar_frame"), now, rospy.Duration(4.0))
+        #     startOdomCameraTrans = tfBuffer.lookup_transform("base_footprint", "odom", rospy.Time(0))
+        #     transFound = True
+        # except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException) as err:
+        #     rospy.logwarn(err)
+        #     rate.sleep()
+
 
     while not rospy.is_shutdown():
         rospy.loginfo("TRANSFORM BROADCASTER WE ****WILL**** SEND THE FIRST TRANSFORM")
@@ -55,10 +65,13 @@ if __name__ == "__main__":
         startOdomCameraTransStamped.header.stamp = rospy.Time.now()
         startOdomCameraTransStamped.header.frame_id = "camera_link"
         startOdomCameraTransStamped.child_frame_id = "odom"
-        startOdomCameraTransStamped.transform = startOdomCameraTrans.transform
+        # Rotate odom counter-clockwise 90 degrees
+        #startOdomCameraTransStamped.transform.rotation = tf.transformations.quaternion_multiply(startOdomCameraTransStamped.transform.rotation, tf.transformations.quaternion_from_euler(0.0, np.pi / 2, 0.0))
+        startOdomCameraTransStamped.transform.rotatation = tf.transformations.quaternion_from_euler(0.0, -(np.pi/2), 0.0)
+        startOdomCameraTransStamped.transform.translation = startOdomCameraTrans.transform.translation
 
         #startOdomCameraTransStamped.transform.translation = startOdomCameraTrans.translation
-        #startOdomCameraTransStamped.transform.rotation = startOdomCameraTrans.rotation
+        
 
 
         br.sendTransform(startOdomCameraTransStamped)
