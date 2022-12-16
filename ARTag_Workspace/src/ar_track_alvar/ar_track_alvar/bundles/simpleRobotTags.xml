@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<multimarker markers="1">
+    <!-- point labeling convention: start from bottom left, and go counter clockwise -->
+    <!-- master AR Tag, located above blue batteries -->
+    <marker index="14" status="1">
+        <!-- centered @ 0, 0, 0-->
+        <corner x="-2" y="-2" z="0" />
+        <corner x="2" y="-2" z="0" />
+        <corner x="2" y="2" z="0" />
+        <corner x="-2" y="2" z="0" />
+    </marker>
+
+
+</multimarker>

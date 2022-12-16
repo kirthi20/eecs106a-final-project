@@ -13,8 +13,8 @@ import sys
 from geometry_msgs.msg import Twist, Vector3
 
 # Distance threshold for stopping the Turtlebot
-threshold_distance1 = 0.2
-threshold_distance2 = 0.025
+threshold_distance1 = 0.25
+threshold_distance2 = 0.1
 
 #Define the method which contains the main functionality of the node.
 def controller(turtlebot_frame, goal_frame):
@@ -29,7 +29,7 @@ def controller(turtlebot_frame, goal_frame):
   ################################### YOUR CODE HERE ##############
 
   #Create a publisher and a tf buffer, which is primed with a tf listener
-  pub = rospy.Publisher('/cmd_vel', Twist, queue_size=10)
+  pub = rospy.Publisher('/cmd_vel', Twist, queue_size=1)
   tfBuffer = tf2_ros.Buffer()
   tfListener = tf2_ros.TransformListener(tfBuffer)
   
@@ -91,15 +91,14 @@ if __name__ == '__main__':
   rospy.init_node('turtlebot_controller', anonymous=True)
 
   try:
-    controller("ar_marker_0", "ar_marker_4")
+    controller("ar_marker_14", "ar_marker_15")
     #controller(sys.argv[1], sys.argv[2])
   except rospy.ROSInterruptException:
     pass
-
   waitForKeyPress()
   
-  try:
-    controller("ar_marker_0", "ar_marker_8")
-  except:
-    pass
-  
+  # try:
+  #   controller("ar_marker_0", "ar_marker_4")
+  # except:
+  #   pass
+  # 

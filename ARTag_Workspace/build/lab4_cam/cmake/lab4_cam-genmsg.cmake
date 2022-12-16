@@ -19,7 +19,7 @@ add_custom_target(lab4_cam_generate_messages ALL)
 
 get_filename_component(_filename "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv" NAME_WE)
 add_custom_target(_lab4_cam_generate_messages_check_deps_${_filename}
-  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "lab4_cam" "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv" "sensor_msgs/Image:std_msgs/Header"
+  COMMAND ${CATKIN_ENV} ${PYTHON_EXECUTABLE} ${GENMSG_CHECK_DEPS_SCRIPT} "lab4_cam" "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv" "std_msgs/Header:sensor_msgs/Image"
 )
 
 #
@@ -33,7 +33,7 @@ add_custom_target(_lab4_cam_generate_messages_check_deps_${_filename}
 _generate_srv_cpp(lab4_cam
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg"
   ${CATKIN_DEVEL_PREFIX}/${gencpp_INSTALL_DIR}/lab4_cam
 )
 
@@ -66,7 +66,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS lab4_cam_generate_messages_cpp)
 _generate_srv_eus(lab4_cam
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg"
   ${CATKIN_DEVEL_PREFIX}/${geneus_INSTALL_DIR}/lab4_cam
 )
 
@@ -99,7 +99,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS lab4_cam_generate_messages_eus)
 _generate_srv_lisp(lab4_cam
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg"
   ${CATKIN_DEVEL_PREFIX}/${genlisp_INSTALL_DIR}/lab4_cam
 )
 
@@ -132,7 +132,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS lab4_cam_generate_messages_lisp)
 _generate_srv_nodejs(lab4_cam
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg"
   ${CATKIN_DEVEL_PREFIX}/${gennodejs_INSTALL_DIR}/lab4_cam
 )
 
@@ -165,7 +165,7 @@ list(APPEND ${PROJECT_NAME}_EXPORTED_TARGETS lab4_cam_generate_messages_nodejs)
 _generate_srv_py(lab4_cam
   "/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/src/lab4_cam/srv/ImageSrv.srv"
   "${MSG_I_FLAGS}"
-  "/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg;/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg"
+  "/opt/ros/noetic/share/std_msgs/cmake/../msg/Header.msg;/opt/ros/noetic/share/sensor_msgs/cmake/../msg/Image.msg"
   ${CATKIN_DEVEL_PREFIX}/${genpy_INSTALL_DIR}/lab4_cam
 )
 

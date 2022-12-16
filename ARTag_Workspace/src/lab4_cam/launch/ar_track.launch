@@ -7,14 +7,12 @@
     <arg name="cam_image_topic"      default="/camera/color/image_raw" />
     <arg name="cam_info_topic"       default="/camera/color/camera_info" />
     <arg name="output_frame"         default="/camera_color_frame" />
-    <arg name="bundle_files"         default="$(find ar_track_alvar)/bundles/robotTags.xml $(find ar_track_alvar)/bundles/personTags.xml $(find ar_track_alvar)/bundles/homeBaseTags.xml" />
 
-    <node name="ar_track_alvar" pkg="ar_track_alvar" type="findMarkerBundlesNoKinect" respawn="false" output="screen">
+    <node name="ar_track_alvar" pkg="ar_track_alvar" type="individualMarkersNoKinect" respawn="false" output="screen">
 		<param name="marker_size"           type="double" value="$(arg marker_size)" />
 		<param name="max_new_marker_error"  type="double" value="$(arg max_new_marker_error)" />
 		<param name="max_track_error"       type="double" value="$(arg max_track_error)" />
 		<param name="output_frame"          type="string" value="$(arg output_frame)" />
-		<param name="bundle_files"          type="string" value="$(arg bundle_files)" />
 
 		<remap from="camera_image"  to="$(arg cam_image_topic)" />
 		<remap from="camera_info"   to="$(arg cam_info_topic)" />
