@@ -168,6 +168,21 @@ depend:
 .PHONY : depend
 
 # Convenience name for target.
+automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+.PHONY : automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+
+# Convenience name for target.
+rosgraph_msgs_generate_messages_py: automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
+
+.PHONY : rosgraph_msgs_generate_messages_py
+
+# fast build rule for target.
+rosgraph_msgs_generate_messages_py/fast:
+	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
+.PHONY : rosgraph_msgs_generate_messages_py/fast
+
+# Convenience name for target.
 automatic_navigation/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule:
 	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 automatic_navigation/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
 .PHONY : automatic_navigation/CMakeFiles/actionlib_msgs_generate_messages_lisp.dir/rule
@@ -243,21 +258,6 @@ move_base_msgs_generate_messages_nodejs/fast:
 .PHONY : move_base_msgs_generate_messages_nodejs/fast
 
 # Convenience name for target.
-automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-.PHONY : automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-
-# Convenience name for target.
-rosgraph_msgs_generate_messages_py: automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/rule
-
-.PHONY : rosgraph_msgs_generate_messages_py
-
-# fast build rule for target.
-rosgraph_msgs_generate_messages_py/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build.make automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_py.dir/build
-.PHONY : rosgraph_msgs_generate_messages_py/fast
-
-# Convenience name for target.
 automatic_navigation/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule:
 	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 automatic_navigation/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
 .PHONY : automatic_navigation/CMakeFiles/actionlib_generate_messages_nodejs.dir/rule
@@ -331,21 +331,6 @@ rosgraph_msgs_generate_messages_lisp: automatic_navigation/CMakeFiles/rosgraph_m
 rosgraph_msgs_generate_messages_lisp/fast:
 	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build.make automatic_navigation/CMakeFiles/rosgraph_msgs_generate_messages_lisp.dir/build
 .PHONY : rosgraph_msgs_generate_messages_lisp/fast
-
-# Convenience name for target.
-automatic_navigation/CMakeFiles/_catkin_empty_exported_target.dir/rule:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f CMakeFiles/Makefile2 automatic_navigation/CMakeFiles/_catkin_empty_exported_target.dir/rule
-.PHONY : automatic_navigation/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-# Convenience name for target.
-_catkin_empty_exported_target: automatic_navigation/CMakeFiles/_catkin_empty_exported_target.dir/rule
-
-.PHONY : _catkin_empty_exported_target
-
-# fast build rule for target.
-_catkin_empty_exported_target/fast:
-	cd /home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/build && $(MAKE) -f automatic_navigation/CMakeFiles/_catkin_empty_exported_target.dir/build.make automatic_navigation/CMakeFiles/_catkin_empty_exported_target.dir/build
-.PHONY : _catkin_empty_exported_target/fast
 
 # Convenience name for target.
 automatic_navigation/CMakeFiles/roscpp_generate_messages_lisp.dir/rule:
@@ -565,20 +550,19 @@ help:
 	@echo "... depend"
 	@echo "... install/strip"
 	@echo "... install"
-	@echo "... list_install_components"
+	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... actionlib_msgs_generate_messages_lisp"
 	@echo "... move_base_msgs_generate_messages_lisp"
 	@echo "... roscpp_generate_messages_cpp"
+	@echo "... list_install_components"
 	@echo "... install/local"
 	@echo "... rosgraph_msgs_generate_messages_eus"
 	@echo "... move_base_msgs_generate_messages_nodejs"
-	@echo "... rosgraph_msgs_generate_messages_py"
 	@echo "... actionlib_generate_messages_nodejs"
 	@echo "... actionlib_generate_messages_py"
 	@echo "... actionlib_msgs_generate_messages_nodejs"
 	@echo "... actionlib_msgs_generate_messages_eus"
 	@echo "... rosgraph_msgs_generate_messages_lisp"
-	@echo "... _catkin_empty_exported_target"
 	@echo "... roscpp_generate_messages_lisp"
 	@echo "... actionlib_generate_messages_lisp"
 	@echo "... actionlib_msgs_generate_messages_cpp"

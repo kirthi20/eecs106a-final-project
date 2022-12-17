@@ -1,0 +1,8 @@
+prefix=/home/cc/ee106a/fa22/class/ee106a-agf/eecs106a-final-project/ARTag_Workspace/devel
+
+Name: people_velocity_tracker
+Description: Description of people_velocity_tracker
+Version: 1.4.2
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: easy_markers geometry_msgs kalman_filter people_msgs roslib rospy
